@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html data-wf-page="667187163156a5df09557ed5">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+
+        <title>IEEECS Official Website</title>
+
+        <link href="css/normalize.css" rel="stylesheet" type="text/css" />
+        <link href="css/layout.css" rel="stylesheet" type="text/css" />
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+
+        <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+        <link href="images/webclip.png" rel="apple-touch-icon" />
+
+    </head>
+
+    <body>
+
+        <div class="cursor-wrapp">
+            <div class="cursor-emmbed w-embed">
+                <style>
+                    .cursor-wrapp {
+                        pointer-events: none;
+                    }
+                </style>
+            </div>
+            <div data-w-id="darkyn-cursor" class="cursor">
+                <div class="project-cursor-text">
+                    View<br />
+                    Work
+                </div>
+            </div>
+        </div>
+
+        <div id="navbar-placeholder"></div>
+
+        <div class="sitemap">
+            <div class="w-layout-blockcontainer main-container w-container">
+                <div class="inner-sitemap">
+                    <h2 data-w-id="darkyn25" style="opacity: 0;" class="sitemap-heading">contact</h2>
+                    <div data-w-id="darkyn26" style="opacity: 0;" class="stemap-text">Who We are and what we do</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <div class="w-layout-blockcontainer main-container w-container">
+                <div id="darkyn36" class="w-layout-layout contact-stack wf-layout-layout">
+                    <div class="w-layout-cell single-cell">
+                        <p class="contact-text">We&#x27;re dedicated to empowering individuals alike. Let&#x27;s explore opportunities together.</p>
+                        <p class="contact-location">10, Trelawney Place, Colombo 04</p>
+                        <a href="tel:+94-543-2101" class="contact-link">Geesad Bandara - Chairperson</a>
+                        <a href="tel:+94-543-2101" class="contact-link">Mayuran Thanushan - Vice Chairperson</a> <br />
+                        <a href="mailto:ieeecs@iit.ac.lk" class="contact-link contact-last-link">ieeecs@iit.ac.lk</a>
+
+                        <div class="footer-socials contact-socials">
+                            <a data-w-id="darkyn37" href="http://www.facebook.com" target="_blank" class="social-item w-inline-block">
+                                <div class="social-text-2">Linktree</div>
+                                <img  src="images/arrow3_1arrow3.png" alt="" class="social-arrow-2" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="w-layout-cell single-cell">
+                        <h2 class="comtact-main-title contact-title-with-border">drop us a line</h2>
+                        <div class="contact-form-block w-form">
+                            <form id="email-form2" data-wf-ignore="true" novalidate>
+                                <div id="darkyn30" class="w-layout-layout form-stack wf-layout-layout">
+                                    <div id="darkyn31" class="w-layout-cell form-cell">
+                                        <input class="input-style w-input" maxlength="256" name="name" data-name="Name" placeholder="Name *" type="text" id="name" required="" />
+                                    </div>
+                                    <div id="darkyn32" class="w-layout-cell form-cell">
+                                        <input class="input-style w-input" maxlength="256" name="Last-Name" data-name="Last Name" placeholder="Last Name *" type="text" id="last-name" required="" />
+                                    </div>
+                                    <div id="darkyn33" class="w-layout-cell form-cell">
+                                        <input class="input-style w-input" maxlength="256" name="email" data-name="Email" placeholder="Email Address *" type="email" id="email" required="" />
+                                    </div>
+                                    <div id="darkyn34" class="w-layout-cell form-cell">
+                                        <input class="input-style w-input" maxlength="256" name="Phone-Number" data-name="Phone Number" placeholder="Phone Number" type="tel" id="phone-number" />
+                                    </div>
+                                    <div id="darkyn35" class="w-layout-cell form-cell">
+                                        <input class="input-style textarea w-input" maxlength="256" name="Message" data-name="Message" placeholder="Message *" type="text" id="message" required="" />
+                                    </div>
+                                </div>
+                                <input type="submit" class="submit-button w-button" value="send" />
+                            </form>
+                        </div>
+                        
+                        <script>
+                            document.getElementById('email-form2').addEventListener('submit', function (e) {
+                                e.preventDefault();
+                        
+                                // Collect form data
+                                const name = document.getElementById('name').value;
+                                const lastName = document.getElementById('last-name').value;
+                                const email = document.getElementById('email').value;
+                                const phoneNumber = document.getElementById('phone-number').value;
+                                const message = document.getElementById('message').value;
+                        
+                                // Google Apps Script Web App URL
+                                const scriptURL = "https://script.google.com/macros/s/AKfycbwxzKQ9HXHjK_tBAmZHBSxtIqtdGLYGAdInBshEC5z5krK4jqpeSn-w5sJJ2X6fCE7tfw/exec"; // Replace with your Web App URL
+                        
+                                // Send data to Google Sheet
+                                fetch(scriptURL, {
+                                    method: "POST",
+                                    mode: "no-cors", // Bypass CORS restrictions
+                                    body: JSON.stringify({
+                                        name: name,
+                                        lastName: lastName,
+                                        email: email,
+                                        phoneNumber: phoneNumber,
+                                        message: message
+                                    }),
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                })
+                                .then(() => {
+                                    // Since we can't access the response in no-cors mode, assume success
+                                    alert("Your message has been sent successfully!");
+                                    document.getElementById('email-form2').reset();
+                                })
+                                .catch(error => {
+                                    // Handle network errors
+                                    console.error("Error!", error.message);
+                                    alert("There was an error sending your message. Please try again.");
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer-placeholder"></div>
+
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script src="js/plugins.js" type="text/javascript"></script>
+        <script src="js/navbar.js"></script>
+        <script src="js/footer.js"></script>
+
+    </body>
+
+</html>
