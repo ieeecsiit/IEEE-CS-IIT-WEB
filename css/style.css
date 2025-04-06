@@ -3552,3 +3552,8 @@ blockquote {
   font-style: normal;
   font-display: swap;
 }
+
+/* Reset cursor to default */
+body, * {
+  cursor: auto !important;
+}
