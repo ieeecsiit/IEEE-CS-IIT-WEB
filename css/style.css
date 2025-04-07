@@ -2269,6 +2269,7 @@ blockquote {
 .contact-location {
   width: 100%;
   margin-bottom: 30px;
+  line-height: 0%;
 }
 
 .footer-socials {
@@ -2556,7 +2557,7 @@ blockquote {
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   grid-template-rows: auto;
-  grid-template-columns: 1fr 0.5fr;
+  grid-template-columns: 1.2fr 0.5fr;
   grid-auto-columns: 1fr;
   display: grid;
 }
@@ -3550,4 +3551,9 @@ blockquote {
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+/* Reset cursor to default */
+body, * {
+  cursor: auto !important;
 }
