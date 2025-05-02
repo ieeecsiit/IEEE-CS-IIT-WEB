@@ -3,7 +3,7 @@
   --default: #ffa300;
   --transparent: #fff0;
   --white: rgb(255, 255, 255);
-  --border-color: #292929;
+  --border-color: #e9e5e5;
   --grey: #1e1e1e;
 }
 
@@ -2171,6 +2171,7 @@ blockquote {
 .team-details {
   padding-top: 20px;
   padding-bottom: 20px;
+  color: #000;
 }
 
 .contact-section {
