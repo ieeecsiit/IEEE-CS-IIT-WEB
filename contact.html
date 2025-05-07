@@ -48,7 +48,7 @@
                     <div class="w-layout-cell single-cell">
                         <h2 class="comtact-main-title contact-title-with-border">drop us a line</h2>
                         <div class="contact-form-block w-form">
-                            <form id="email-form2" data-wf-ignore="true" novalidate>
+                            <form id="email-form2" data-wf-ignore="true" novalidate action="https://script.google.com/macros/s/AKfycbwxzKQ9HXHjK_tBAmZHBSxtIqtdGLYGAdInBshEC5z5krK4jqpeSn-w5sJJ2X6fCE7tfw/exec">
                                 <div id="darkyn30" class="w-layout-layout form-stack wf-layout-layout">
                                     <div id="darkyn31" class="w-layout-cell form-cell">
                                         <input class="input-style w-input" maxlength="256" name="name" data-name="Name" placeholder="Name *" type="text" id="name" required="" />
@@ -73,7 +73,6 @@
                         <script>
                             document.getElementById('email-form2').addEventListener('submit', function (e) {
                                 e.preventDefault();
-                        
                                 // Collect form data
                                 const name = document.getElementById('name').value;
                                 const lastName = document.getElementById('last-name').value;

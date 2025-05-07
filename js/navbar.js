@@ -5,24 +5,28 @@ document.addEventListener("DOMContentLoaded", function () {
             // Insert the navbar into the placeholder
             document.getElementById("navbar-placeholder").innerHTML = data;
 
+            // Now query elements inside the inserted navbar
+            const navbar = document.getElementById("navbar-placeholder");
+
             // Highlight the active link based on the current URL
-            const currentPath = window.location.pathname.split("/").pop(); // Get the current file name
-            const navLinks = document.querySelectorAll(".menu-item"); // Select all nav links
+            const currentPath = window.location.pathname.split("/").pop(); // Get current file name
+            const navLinks = navbar.querySelectorAll(".menu-item"); // Select all nav links inside navbar
 
             navLinks.forEach(link => {
                 if (link.getAttribute("href") === currentPath) {
-                    link.setAttribute("aria-current", "page"); // Set aria-current for the active link
-                    link.classList.add("w--current"); // Add the active class
+                    link.setAttribute("aria-current", "page");
+                    link.classList.add("w--current");
                 }
             });
 
-            // Add functionality for the hamburger menu toggle
-            const menuButton = document.querySelector(".menu-button"); // Select the hamburger button
-            const mainMenu = document.querySelector(".main-menu"); // Select the navigation menu
+            // Select hamburger button and main menu inside navbar
+            const menuButton = navbar.querySelector(".menu-button");
+            const mainMenu = navbar.querySelector(".main-menu");
 
             if (menuButton && mainMenu) {
                 menuButton.addEventListener("click", function () {
-                    mainMenu.classList.toggle("menu-open"); // Toggle the menu visibility
+                    mainMenu.classList.toggle("w--nav-menu-open"); // Toggle menu open class
+                    menuButton.classList.toggle("w--open"); // Toggle button open class
                 });
             }
         });

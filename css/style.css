@@ -1149,7 +1149,6 @@ body {
   background-color: var(--white);
   color: #fff;
   cursor: none;
-  background-image: url('../images/Hero.png');
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1340,6 +1339,9 @@ blockquote {
 }
 
 .hero-section {
+  background-image: url('../images/Hero.png');
+  background-position: 50% 100%;
+  background-repeat: no-repeat;
   height: 100vh; /* Full viewport height */
   padding: 0; /* Remove padding */
   position: relative; /* Required for absolute positioning of child elements */
@@ -1351,27 +1353,6 @@ blockquote {
   position: relative;
   display: grid;
   height: 100vh; /* Full viewport height */
-}
-
-/* Position IEEE in the top-left corner */
-.hero-left-text {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 80px; /* Adjust font size as needed */
-  line-height: 2;
-  color: #000;
-}
-
-/* Position CS in the bottom-right corner */
-.hero-right-text {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 80px; /* Adjust font size as needed */
-  line-height: 1;
-  color: #000;
-  margin-bottom: 300px; /* Adjust margin as needed */
 }
 
 /* Center the Hero Under Text */
@@ -3076,12 +3057,6 @@ blockquote {
   .icon {
     color: var(--white);
     font-size: 33px;
-  }
-
-  .shop-button {
-    color: var(--white);
-    align-self: flex-start;
-    margin-top: 25px;
   }
 
   .menu-button {
