@@ -1726,6 +1726,7 @@ blockquote {
   font-weight: 600;
   line-height: 17px;
   display: inline-block;
+  color: white;
 }
 
 .testimonials-section {
@@ -1868,8 +1869,8 @@ blockquote {
 }
 
 .blog-category {
-  border: 1px solid #ffa300;
-  color: var(--black);
+  background-color: #ffa300;
+  color: var(--white);
   border-radius: 10px;
   padding: 10px 20px;
   text-decoration: none;
@@ -1931,12 +1932,13 @@ blockquote {
   background-color: #ffa300; /* Button color */
   text-decoration: none;
   border-radius: 5px;
+  font-weight: 500;
   transition: background-color 0.3s ease;
-  border: var(--black) 1px solid;
+  
 }
 .join-us-button:hover {
-  background-color: #ffffff; /* Hover color */
-  color: #000000;
+  background-color: var(--grey); /* Hover color */
+  color: var(--white);
 }
 
   @media (max-width: 768px) {
@@ -2305,7 +2307,6 @@ blockquote {
   color: #fff;
   text-transform: uppercase;
   background-color: #ffa300;
-  border: 1px solid #242424;
   border-radius: 5px;
   margin-top: 20px;
   margin-left: auto;
@@ -2316,8 +2317,8 @@ blockquote {
 }
 
 .submit-button:hover {
-  color: #000;
-  background-color: #fff;
+  color: var(--white);
+  background-color: var(--grey);
   background-image: none;
 }
 
