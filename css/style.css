@@ -3053,6 +3053,50 @@ blockquote {
     background-color: #000;
     border-radius: 0;
     padding: 20px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    z-index: 1000;
+    width: 100%;
+  }
+
+  .main-menu.w--nav-menu-open {
+    display: block !important;
+  }
+
+  .menu-button {
+    border: 1px solid var(--white);
+    flex: 0 auto;
+    order: 1;
+    margin-left: 20px;
+    padding: 8px;
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .menu-button.w--open {
+    background-color: var(--default);
+  }
+
+  .menu-button .icon {
+    color: var(--white);
+    font-size: 24px;
+  }
+
+  .menu-item {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .menu-item:last-child {
+    border-bottom: none;
   }
 
   .icon {
