@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Secretary",
             image: "images/team/Yuthmi.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/yuthmi-minaanga-bangamu-arachchi-6523ab292/" },
                 { icon: "images/email.png", link: "mailto:yuthmi.20231072@iit.ac.lk" }
             ]
         },
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             image: "images/team/Rajeevan.jpg",
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://linkedin.com/in/Rajeevan-Ramakumar"},
-                { icon: "images/email.png", link: "mailto:rajeeva.20230018@iit.ac.lk" }
+                { icon: "images/email.png", link: "mailto:rajeevan.20230018@iit.ac.lk" }
             ]
         },
         {
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Program & Logistics Coordinator",
             image: "images/team/Pujana.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/pujana-rathnayake/" },
                 { icon: "images/email.png", link: "mailto:pujana.20222362@iit.ac.lk" }
             ]
         },
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Volunteer Management Coordinator",
             image: "images/team/Dinaya.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dinaya-juwan-wadu/" },
                 { icon: "images/email.png", link: "mailto:dinaya.20231211@iit.ac.lk" }
             ]
         },
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Public Visibility Coordinator",
             image: "images/team/Krisha.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/krisha-ravi123/" },
                 { icon: "images/email.png", link: "mailto:krisha.20220849@iit.ac.lk" }
             ]
         },
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Industry Outreach Coordinator",
             image: "images/team/Pushpavie.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/pushpavie-krishnathasan-910b7a207/" },
                 { icon: "images/email.png", link: "mailto:pushpavie.20230745@iit.ac.lk" }
             ]
         },
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Membership Development Coordinator",
             image: "images/team/Lakith.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/lakith-garusingarachchi-316b571b1/" },
                 { icon: "images/email.png", link: "mailto:lakith.20231573@iit.ac.lk" }
             ]
         },
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Secretarial Coordinator",
             image: "images/team/Arani.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/arani-weerathunga-8983b9295/" },
                 { icon: "images/email.png", link: "mailto:arani.20231178@iit.ac.lk" }
             ]
         },
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
             job: "Finance Coordinator",
             image: "images/team/Wooshan.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.themeforest.com" },
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/wooshan-gamage-5b03b91bb/" },
                 { icon: "images/email.png", link: "mailto:wooshan.20231374@iit.ac.lk" }
             ]
         },
