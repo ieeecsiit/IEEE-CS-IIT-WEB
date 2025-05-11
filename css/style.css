@@ -1839,6 +1839,7 @@ blockquote {
   padding: 10px 20px;
   text-decoration: none;
   display: inline-block;
+  font-weight: 500;
 }
 
 .blog-heading {
@@ -2047,7 +2048,7 @@ blockquote {
   margin-left: 20px;
   padding: 10px;
   color: #fff;
-  font-weight: 200;
+  font-weight: 500;
 }
 
 .clients-section, .team-section {
@@ -2916,6 +2917,8 @@ blockquote {
     margin-top: 20px;
     margin-bottom: 130px;
     margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
   }
 
   .mission-paragraph.mission-paragraph-right {
