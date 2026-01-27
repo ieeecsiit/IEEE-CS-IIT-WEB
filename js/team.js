@@ -2,117 +2,117 @@ document.addEventListener("DOMContentLoaded", function () {
     // Array of team members
     const teamMembers = [
         {
-            name: "Geesad Bandara",
+            name: "Kithsara Medawewa",
             job: "Chairperson",
-            image: "images/team/Geesad.jpg",
+            image: "images/team/kithsara.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://linkedin.com/in/Geesad-Bandara" },
-                { icon: "images/email.png", link: "mailto:chamithu.20230782@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/kithsara-medawewa-b1b7a932a/" },
+                { icon: "images/email.png", link: "mailto:kithsara.20240505@iit.ac.lk" }
             ]
         },
         {
-            name: "Yuthmi Bangamu Arachchi",
-            job: "Secretary",
-            image: "images/team/Yuthmi.jpg",
-            socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/yuthmi-minaanga-bangamu-arachchi-6523ab292/" },
-                { icon: "images/email.png", link: "mailto:yuthmi.20231072@iit.ac.lk" }
-            ]
-        },
-        {
-            name: "Mayuran Thanushan",
+            name: "Vinuka Jayavihan ",
             job: "Vice - Chairperson",
-            image: "images/team/Thanushan.jpg",
+            image: "images/team/vinuka.demo.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://linkedin.com/in/Mayuran-Thanushan"},
-                { icon: "images/email.png", link: "mailto:mayuran.20231047@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/vinuka-jayavihan/"},
+                { icon: "images/email.png", link: "mailto:vinuka.20240732@iit.ac.lk" }
             ]
         },
         {
-            name: "Rajeevan Ramakumar",
+            name: "	Saumya Liyanage",
+            job: "Secretary",
+            image: "images/team/saumya.jpg",
+            socials: [
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/saumya-liyanage/" },
+                { icon: "images/email.png", link: "mailto:saumya.20230094@iit.ac.lk" }
+            ]
+        },
+        {
+            name: "Maleesha Bandaranayake",
             job: "Treasurer",
-            image: "images/team/Rajeevan.jpg",
+            image: "images/team/maleesha.demo.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://linkedin.com/in/Rajeevan-Ramakumar"},
-                { icon: "images/email.png", link: "mailto:rajeevan.20230018@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/maleesha-bandaranayake/"},
+                { icon: "images/email.png", link: "mailto:maleesha.20241596@iit.ac.lk" }
             ]
         },
         {
-            name: "Sasindu Janapriya",
+            name: "Adrian Vethanayagam",
             job: "Webmaster",
-            image: "images/team/Sasindu.jpg",
+            image: "images/team/adrian.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://linkedin.com/in/Sasindu-Janapriya" },
-                { icon: "images/email.png", link: "mailto:sasindu.20230130@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/joshua-adrian-/" },
+                { icon: "images/email.png", link: "mailto:joshua.20240846@iit.ac.lk" }
             ]
         },
         {
-            name: "Pujana Rathnayake",
+            name: "Dulina Samarathunga",
             job: "Program & Logistics Coordinator",
-            image: "images/team/Pujana.jpg",
+            image: "images/team/dulina.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/pujana-rathnayake/" },
-                { icon: "images/email.png", link: "mailto:pujana.20222362@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulina-samarathunga-006735358/" },
+                { icon: "images/email.png", link: "mailto:dulina.20231407@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Dinaya Yuhansi",
+            name: "Dulansa Manamperi",
             job: "Volunteer Management Coordinator",
-            image: "images/team/Dinaya.jpg",
+            image: "images/team/dulansa.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dinaya-juwan-wadu/" },
-                { icon: "images/email.png", link: "mailto:dinaya.20231211@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulansa-manamperi-425876371/" },
+                { icon: "images/email.png", link: "mailto:dulansa.20240564@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Krisha Ravichandran",
+            name: "Janindu Wijesooriya",
             job: "Public Visibility Coordinator",
-            image: "images/team/Krisha.jpg",
+            image: "images/team/janindu.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/krisha-ravi123/" },
-                { icon: "images/email.png", link: "mailto:krisha.20220849@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/janindu-wijesooriya-bb459a1b0/" },
+                { icon: "images/email.png", link: "mailto:janidu.20233130@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Pushpavie Krishnathasan",
+            name: "Nikini Madugoda",
             job: "Industry Outreach Coordinator",
-            image: "images/team/Pushpavie.jpg",
+            image: "images/team/nikini.jpg",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/pushpavie-krishnathasan-910b7a207/" },
-                { icon: "images/email.png", link: "mailto:pushpavie.20230745@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/nikini-madugoda/" },
+                { icon: "images/email.png", link: "mailto:milsha.20232393@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Lakith Garusingharachchi",
+            name: "Umesha Liyanage",
             job: "Membership Development Coordinator",
-            image: "images/team/Lakith.jpg",
+            image: "images/team/umesha.png",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/lakith-garusingarachchi-316b571b1/" },
-                { icon: "images/email.png", link: "mailto:lakith.20231573@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/umesha-liyanage/" },
+                { icon: "images/email.png", link: "mailto:samindi.20240265@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Arani Weerathunga",
+            name: "Teneesha Alwis",
             job: "Secretarial Coordinator",
-            image: "images/team/Arani.jpg",
+            image: "images/team/teneesha.png",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/arani-weerathunga-8983b9295/" },
-                { icon: "images/email.png", link: "mailto:arani.20231178@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/teneesha-alwis/" },
+                { icon: "images/email.png", link: "mailto:teneesha.20231326@iit.ac.lk" }
             ]
         },
 
         {
-            name: "Wooshan Gamage",
-            job: "Finance Coordinator",
-            image: "images/team/Wooshan.jpg",
+            name: "Yasindu Janapriya",
+            job: "Design Coordinator",
+            image: "images/team/yasindu.png",
             socials: [
-                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/wooshan-gamage-5b03b91bb/" },
-                { icon: "images/email.png", link: "mailto:wooshan.20231374@iit.ac.lk" }
+                { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/yasindujanapriya/" },
+                { icon: "images/email.png", link: "mailto:yasindu.20231866@iit.ac.lk" }
             ]
         },
     ];
