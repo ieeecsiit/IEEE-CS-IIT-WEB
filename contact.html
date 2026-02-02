@@ -71,45 +71,31 @@
                         </div>
                         
                         <script>
-                            document.getElementById('email-form2').addEventListener('submit', function (e) {
-                                e.preventDefault();
-                                // Collect form data
-                                const name = document.getElementById('name').value;
-                                const lastName = document.getElementById('last-name').value;
-                                const email = document.getElementById('email').value;
-                                const phoneNumber = document.getElementById('phone-number').value;
-                                const message = document.getElementById('message').value;
-                        
-                                // Google Apps Script Web App URL
-                                const scriptURL = "https://script.google.com/macros/s/AKfycbwxzKQ9HXHjK_tBAmZHBSxtIqtdGLYGAdInBshEC5z5krK4jqpeSn-w5sJJ2X6fCE7tfw/exec"; // Replace with your Web App URL
-                        
-                                // Send data to Google Sheet
-                                fetch(scriptURL, {
+                        document.getElementById('email-form2').addEventListener('submit', function (e) {
+                            e.preventDefault();
+
+                            const formData = new FormData();
+
+                            formData.append("entry.1111111111", document.getElementById("name").value);
+                            formData.append("entry.2222222222", document.getElementById("last-name").value);
+                            formData.append("entry.3333333333", document.getElementById("email").value);
+                            formData.append("entry.4444444444", document.getElementById("phone-number").value);
+                            formData.append("entry.5555555555", document.getElementById("message").value);
+
+                            fetch(
+                                "https://docs.google.com/forms/d/e/1FAIpQLSca4K50sO2CYZTQMBXNUfQnhrwmttF_MDgH_XxDOueZYvAlpg/formResponse",
+                                {
                                     method: "POST",
-                                    mode: "no-cors", // Bypass CORS restrictions
-                                    body: JSON.stringify({
-                                        name: name,
-                                        lastName: lastName,
-                                        email: email,
-                                        phoneNumber: phoneNumber,
-                                        message: message
-                                    }),
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    }
-                                })
-                                .then(() => {
-                                    // Since we can't access the response in no-cors mode, assume success
-                                    alert("Your message has been sent successfully!");
-                                    document.getElementById('email-form2').reset();
-                                })
-                                .catch(error => {
-                                    // Handle network errors
-                                    console.error("Error!", error.message);
-                                    alert("There was an error sending your message. Please try again.");
-                                });
+                                    mode: "no-cors",
+                                    body: formData
+                                }
+                            ).then(() => {
+                                alert("Thank you! Your message has been sent.");
+                                document.getElementById('email-form2').reset();
                             });
+                        });
                         </script>
+
                     </div>
                 </div>
             </div>
