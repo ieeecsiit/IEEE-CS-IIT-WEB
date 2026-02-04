@@ -152,29 +152,49 @@
         </script>
 
         <div class="blog-section">
-            <div class="w-layout-blockcontainer main-container w-container">
-                <h2 class="main-title">Our Blogs</h2>
-                <div id="blog-section-placeholder" class="blog-list-wrapper w-dyn-list"></div>
-            </div>
-        </div>
-        <script>
-            fetch('blog-section.html')
-                .then(response => response.text())
-                .then(data => {
-                    // Create a temporary container to parse the fetched HTML
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = data;
-        
-                    // Select only the first 3 blog items
-                    const blogItems = tempDiv.querySelectorAll('.w-dyn-item');
-                    const limitedBlogs = Array.from(blogItems).slice(0, 3);
-        
-                    // Append the limited blogs to the placeholder
-                    const blogSectionPlaceholder = document.getElementById('blog-section-placeholder');
-                    limitedBlogs.forEach(blog => blogSectionPlaceholder.appendChild(blog));
-                })
-                .catch(error => console.error('Error loading blog section:', error));
-        </script>
+    <div class="w-layout-blockcontainer main-container w-container">
+        <h2 class="main-title">Our Blogs</h2>
+        <div id="blog-section-placeholder" class="blog-list-wrapper w-dyn-list"></div>
+    </div>
+</div>
+
+<script>
+    fetch('blog-section.html')
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(data => {
+            // 1. Parse the fetched HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = data;
+
+            // 2. Select the blog items
+            const blogItems = tempDiv.querySelectorAll('.w-dyn-item');
+            
+            // 3. Limit to the first 3 items
+            const limitedBlogs = Array.from(blogItems).slice(0, 3);
+
+            // 4. Get the placeholder
+            const placeholder = document.getElementById('blog-section-placeholder');
+
+            // 5. Create the standard Webflow 'w-dyn-items' wrapper
+            // This ensures your Grid/Flex layout works correctly
+            const listWrapper = document.createElement('div');
+            listWrapper.classList.add('w-dyn-items');
+            listWrapper.setAttribute('role', 'list');
+
+            // 6. Append items to the wrapper, then wrapper to the placeholder
+            if (limitedBlogs.length > 0) {
+                limitedBlogs.forEach(blog => listWrapper.appendChild(blog));
+                placeholder.appendChild(listWrapper);
+            } else {
+                // Optional: Handle empty state
+                placeholder.innerHTML = '<div>No blogs found.</div>';
+            }
+        })
+        .catch(error => console.error('Error loading blog section:', error));
+</script>
 
         <!-- Join Us Section -->
         <div class="join-us-section">
