@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Saumya Liyanage", 
             job: "Secretary", 
-            image: "images/team/saumya.jpg", 
+            image: "images/team/saumya1jpeg.jpg", 
             socials: [{ icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/saumya-liyanage/" }, { icon: "images/email.png", link: "mailto:saumya.20230094@iit.ac.lk" }] 
         },
         { 
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Adrian Vethanayagam", 
             job: "Webmaster", 
-            image: "images/team/adrian.jpg", 
+            image: "images/team/adrian1.jpg", 
             socials: [{ icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/joshua-adrian-/" }, { icon: "images/email.png", link: "mailto:joshua.20240846@iit.ac.lk" }] 
         }
     ];
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Dulina Samarathunga", 
             job: "Program & Logistics Coordinator", 
-            image: "images/team/dulina.jpg", 
+            image: "images/team/dulina1.jpg", 
             socials: [{ icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulina-samarathunga-006735358/" }, { icon: "images/email.png", link: "mailto:dulina.20231407@iit.ac.lk" }] 
         },
         { 
