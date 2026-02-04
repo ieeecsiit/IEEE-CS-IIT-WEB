@@ -3739,3 +3739,86 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
     width: 100%;
   }
 }
+/* Base Grid Setup - 12 columns for perfect centering */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); 
+  grid-gap: 50px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.team-section-heading {
+  grid-column: span 12;
+  text-align: center;
+  color: var(--black);
+  text-transform: uppercase;
+  margin: 60px 0 40px 0;
+  font-size: 42px;
+  border-bottom: 2px solid var(--default);
+  padding-bottom: 15px;
+}
+
+/* Default item for rows of 3 */
+.team-item {
+  grid-column: span 4; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* Layout for Executive Committee (3-2) */
+/* 4th and 5th items centered in the second row */
+.grid-center-two:nth-of-type(4) { grid-column: 3 / span 4; }
+.grid-center-two:nth-of-type(5) { grid-column: 7 / span 4; }
+
+/* Layout for Standing Committee (3-3-1) */
+/* 7th item centered in the third row */
+.grid-center-one { grid-column: 5 / span 4; }
+
+/* --- BETTER BUTTONS --- */
+.team-scials {
+  position: absolute;
+  inset: 15px 15px auto auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 10;
+}
+
+.social-link-2 {
+  background-color: white;
+  border-radius: 50%; /* Circular */
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  border: 1px solid var(--border-color);
+}
+
+.social-link-2:hover {
+  background-color: var(--default);
+  transform: scale(1.15) rotate(5deg); /* Slight pop and tilt */
+  box-shadow: 0 6px 15px rgba(255, 163, 0, 0.4);
+}
+
+.social-image {
+  width: 20px;
+  height: 20px;
+  transition: filter 0.3s ease;
+}
+
+.social-link-2:hover .social-image {
+  filter: brightness(0) invert(1); /* Turns icon white */
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 767px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .team-item, .grid-center-two, .grid-center-one {
+    grid-column: span 1 !important;
+  }
+}
