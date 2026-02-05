@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Adrian Vethanayagam", 
             job: "Webmaster", 
-            image: "images/team/adrian1.png", 
+            image: "images/team/adrian1.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/joshua-adrian-/" },
                 { icon: "images/email.png", link: "mailto:joshua.20240846@iit.ac.lk" }
