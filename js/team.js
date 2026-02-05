@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Kithsara Medawewa", 
             job: "Chairperson", 
-            image: "images/team/kithsara.WEBP", 
+            image: "images/team/kithsara.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/kithsara-medawewa-b1b7a932a/" },
                 { icon: "images/email.png", link: "mailto:kithsara.20240505@iit.ac.lk" }
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Saumya Liyanage", 
             job: "Secretary", 
-            image: "images/team/saumya1jpeg.WEBP", 
+            image: "images/team/saumya1jpeg.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/saumya-liyanage/" },
                 { icon: "images/email.png", link: "mailto:saumya.20230094@iit.ac.lk" }
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Maleesha Bandaranayake", 
             job: "Treasurer", 
-            image: "images/team/maleesha.demo.WEBP", 
+            image: "images/team/maleesha.demo.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/maleesha-bandaranayake/" },
                 { icon: "images/email.png", link: "mailto:maleesha.20241596@iit.ac.lk" }
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Adrian Vethanayagam", 
             job: "Webmaster", 
-            image: "images/team/adrian1.WEBP", 
+            image: "images/team/adrian1.png", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/joshua-adrian-/" },
                 { icon: "images/email.png", link: "mailto:joshua.20240846@iit.ac.lk" }
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Dulina Samarathunga", 
             job: "Program & Logistics Coordinator", 
-            image: "images/team/dulina1.WEBP", 
+            image: "images/team/dulina1.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulina-samarathunga-006735358/" },
                 { icon: "images/email.png", link: "mailto:dulina.20231407@iit.ac.lk" }
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Dulansa Manamperi", 
             job: "Volunteer Management Coordinator", 
-            image: "images/team/dulansa.WEBP", 
+            image: "images/team/dulansa.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulansa-manamperi-425876371/" },
                 { icon: "images/email.png", link: "mailto:dulansa.20240564@iit.ac.lk" }
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Janindu Wijesooriya", 
             job: "Public Visibility Coordinator", 
-            image: "images/team/janindu.WEBP", 
+            image: "images/team/janindu.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/janindu-wijesooriya-bb459a1b0/" },
                 { icon: "images/email.png", link: "mailto:janidu.20233130@iit.ac.lk" }
@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Nikini Madugoda", 
             job: "Industry Outreach Coordinator", 
-            image: "images/team/nikini.WEBP", 
+            image: "images/team/nikini.jpg", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/nikini-madugoda/" },
                 { icon: "images/email.png", link: "mailto:milsha.20232393@iit.ac.lk" }
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Umesha Liyanage", 
             job: "Membership Development Coordinator", 
-            image: "images/team/umesha.WEBP", 
+            image: "images/team/umesha.png", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/umesha-liyanage/" },
                 { icon: "images/email.png", link: "mailto:samindi.20240265@iit.ac.lk" }
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Teneesha Alwis", 
             job: "Secretarial Coordinator", 
-            image: "images/team/teneesha.WEBP", 
+            image: "images/team/teneesha.png", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/teneesha-alwis/" },
                 { icon: "images/email.png", link: "mailto:teneesha.20231326@iit.ac.lk" }
