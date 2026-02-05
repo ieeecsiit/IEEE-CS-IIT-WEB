@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { 
             name: "Dulansa Manamperi", 
             job: "Volunteer Management Coordinator", 
-            image: "images/team/dulansa.jpg", 
+            image: "images/team/dulansa.WEBP", 
             socials: [
                 { icon: "images/LinkedIn.png", link: "https://www.linkedin.com/in/dulansa-manamperi-425876371/" },
                 { icon: "images/email.png", link: "mailto:dulansa.20240564@iit.ac.lk" }
