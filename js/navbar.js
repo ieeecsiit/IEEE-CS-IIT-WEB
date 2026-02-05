@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
             // 2. Mobile Menu Toggle
             const menuButton = placeholder.querySelector(".menu-button");
             const mainMenu = placeholder.querySelector(".main-menu");
+            const navbar = document.getElementById("navbar-placeholder");
+            document.body.style.paddingTop = navbar.offsetHeight + "px";
 
             if (menuButton && mainMenu) {
                 menuButton.addEventListener("click", function () {
