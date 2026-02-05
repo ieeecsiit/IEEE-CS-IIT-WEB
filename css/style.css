@@ -3822,3 +3822,26 @@ input[type="text"], input[type="email"], input[type="password"], textarea {
     grid-column: span 1 !important;
   }
 }
+/* This keeps the placeholder at the top */
+/* Existing sticky behavior */
+#navbar-placeholder {
+    position: fixed; /* Fixed works better than sticky for this specific hide/show effect */
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    transition: transform 0.3s ease-in-out, background-color 0.3s, box-shadow 0.3s;
+}
+
+/* State when scrolling DOWN (Hide it) */
+#navbar-placeholder.nav-hidden {
+    transform: translateY(-100%);
+}
+
+/* Style when scrolling UP (The "Scrolled" look you wanted) */
+#navbar-placeholder.navbar-scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    backdrop-filter: blur(8px);
+}

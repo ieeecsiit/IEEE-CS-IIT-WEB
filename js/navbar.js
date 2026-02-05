@@ -2,15 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("navbar.html")
         .then(response => response.text())
         .then(data => {
-            // Insert the navbar into the placeholder
-            document.getElementById("navbar-placeholder").innerHTML = data;
+            const placeholder = document.getElementById("navbar-placeholder");
+            placeholder.innerHTML = data;
 
-            // Now query elements inside the inserted navbar
-            const navbar = document.getElementById("navbar-placeholder");
-
-            // Highlight the active link based on the current URL
-            const currentPath = window.location.pathname.split("/").pop(); // Get current file name
-            const navLinks = navbar.querySelectorAll(".menu-item"); // Select all nav links inside navbar
+            // 1. Highlight active link
+            const currentPath = window.location.pathname.split("/").pop();
+            const navLinks = placeholder.querySelectorAll(".menu-item");
 
             navLinks.forEach(link => {
                 if (link.getAttribute("href") === currentPath) {
@@ -19,15 +16,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            // Select hamburger button and main menu inside navbar
-            const menuButton = navbar.querySelector(".menu-button");
-            const mainMenu = navbar.querySelector(".main-menu");
+            // 2. Mobile Menu Toggle
+            const menuButton = placeholder.querySelector(".menu-button");
+            const mainMenu = placeholder.querySelector(".main-menu");
 
             if (menuButton && mainMenu) {
                 menuButton.addEventListener("click", function () {
-                    mainMenu.classList.toggle("w--nav-menu-open"); // Toggle menu open class
-                    menuButton.classList.toggle("w--open"); // Toggle button open class
+                    mainMenu.classList.toggle("w--nav-menu-open");
+                    menuButton.classList.toggle("w--open");
                 });
             }
-        });
+
+            // 3. SMART SCROLL LOGIC
+            let lastScrollY = window.scrollY;
+
+            window.addEventListener("scroll", function () {
+                const currentScrollY = window.scrollY;
+
+                // A. Handle General Scrolled Look (Blur/Shadow/Smallness)
+                if (currentScrollY > 50) {
+                    placeholder.classList.add("navbar-scrolled");
+                } else {
+                    placeholder.classList.remove("navbar-scrolled");
+                }
+
+                // B. Handle Directional Hide/Show
+                if (currentScrollY > lastScrollY && currentScrollY > 150) {
+                    // Scrolling DOWN and passed 150px - Hide it
+                    placeholder.classList.add("nav-hidden");
+                } else {
+                    // Scrolling UP or at the very top - Show it
+                    placeholder.classList.remove("nav-hidden");
+                }
+
+                lastScrollY = currentScrollY;
+            });
+        })
+        .catch(err => console.error("Error loading navbar:", err));
 });
