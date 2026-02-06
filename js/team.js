@@ -115,51 +115,119 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const teamGrid = document.getElementById("team-grid");
 
-    function renderSection(title, members, layoutType) {
-        let sectionHTML = `<h2 class="team-section-heading">${title}</h2>`;
+    
 
-        members.forEach((member, index) => {
-            let layoutClass = "";
+function renderSection(title, members, layoutType) {
+    let itemsHTML = "";
 
-            if (layoutType === "exec" && index >= 3) {
-                layoutClass = "grid-center-two";
-            }
+    members.forEach((member, index) => {
+        let layoutClass = "";
 
-            if (layoutType === "standing" && index === 6) {
-                layoutClass = "grid-center-one";
-            }
+        // Executive: last 2 centered
+        if (layoutType === "exec" && index >= 3) {
+            layoutClass = "grid-center-two";
+        }
 
-            const socialLinks = member.socials
-                .map(social => `
-                    <a href="${social.link}" target="_blank" class="social-link-2 w-inline-block">
-                        <img src="${social.icon}" class="social-image" loading="lazy" alt="social icon">
-                    </a>
-                `)
-                .join("");
+        // Standing: last one centered
+        if (layoutType === "standing" && index === 6) {
+            layoutClass = "grid-center-one";
+        }
 
-            sectionHTML += `
-                <div class="team-item ${layoutClass}">
-                    <div class="team-image-wrapp">
-                        <img 
-                            alt="${member.name}" 
-                            src="${member.image}" 
-                            class="team-img"
-                            loading="lazy"
-                            width="300"
-                            height="300"
-                        />
-                        <div class="team-scials">${socialLinks}</div>
-                    </div>
-                    <div class="team-details">
-                        <h4 class="team-heading">${member.name}</h4>
-                        <div class="team-job">${member.job}</div>
-                    </div>
+        const socialLinks = member.socials
+            .map(social => `
+                <a href="${social.link}" target="_blank" class="social-link-2 w-inline-block">
+                    <img src="${social.icon}" class="social-image" loading="lazy" alt="social icon">
+                </a>
+            `)
+            .join("");
+
+        itemsHTML += `
+            <div class="team-item ${layoutClass}">
+                <div class="team-image-wrapp">
+                    <img 
+                        alt="${member.name}" 
+                        src="${member.image}" 
+                        class="team-img"
+                        loading="lazy"
+                        width="300"
+                        height="300"
+                    />
+                    <div class="team-scials">${socialLinks}</div>
                 </div>
-            `;
-        });
+                <div class="team-details">
+                    <h4 class="team-heading">${member.name}</h4>
+                    <div class="team-job">${member.job}</div>
+                </div>
+            </div>
+        `;
+    });
 
-        return sectionHTML;
-    }
+    return `
+        <div class="team-section">
+            <h2 class="team-section-heading">${title}</h2>
+            <div class="team-grid">
+                ${itemsHTML}
+            </div>
+        </div>
+    `;
+}
+
+if (teamGrid) {
+    let fullHTML = "";
+    fullHTML += renderSection("Executive Committee", execCommittee, "exec");
+    fullHTML += renderSection("Standing Committee Leads", standingCommittee, "standing");
+    teamGrid.innerHTML = fullHTML;
+}
+
+function renderSection(title, members) {
+    let itemsHTML = "";
+
+    members.forEach((member) => {
+        const socialLinks = member.socials
+            .map(social => `
+                <a href="${social.link}" target="_blank" class="social-link-2 w-inline-block">
+                    <img src="${social.icon}" class="social-image" loading="lazy" alt="social icon">
+                </a>
+            `)
+            .join("");
+
+        itemsHTML += `
+            <div class="team-item">
+                <div class="team-image-wrapp">
+                    <img 
+                        alt="${member.name}" 
+                        src="${member.image}" 
+                        class="team-img"
+                        loading="lazy"
+                        width="300"
+                        height="300"
+                    />
+                    <div class="team-scials">${socialLinks}</div>
+                </div>
+                <div class="team-details">
+                    <h4 class="team-heading">${member.name}</h4>
+                    <div class="team-job">${member.job}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    return `
+        <div class="team-section">
+            <h2 class="team-section-heading">${title}</h2>
+            <div class="team-grid">
+                ${itemsHTML}
+            </div>
+        </div>
+    `;
+}
+
+if (teamGrid) {
+    let fullHTML = "";
+    fullHTML += renderSection("Executive Committee", execCommittee);
+    fullHTML += renderSection("Standing Committee Leads", standingCommittee);
+    teamGrid.innerHTML = fullHTML;
+}
 
     if (teamGrid) {
         let fullHTML = "";
