@@ -17,6 +17,7 @@ type CmsEvent = {
   /** The same description with its formatting, from the CMS's rich text editor. */
   contentHtml?: string | null;
   date: string;
+  updatedAt: string;
   location?: string | null;
   registrationLink?: string | null;
   coverImage: number | CmsMedia;
@@ -62,7 +63,12 @@ function toEvent(event: CmsEvent): Event | undefined {
     slug: event.slug,
     title: event.name,
     summary: paragraphs(event.description)[0],
+    text: [
+      ...paragraphs(event.description),
+      ...(event.sessions ?? []).flatMap((session) => [session.title, ...paragraphs(session.description ?? "")]),
+    ],
     date: event.date,
+    updatedAt: event.updatedAt,
     dateLabel: formatDate(event.date, { day: "numeric", month: "long", year: "numeric" }),
     monthLabel: formatDate(event.date, { month: "long", year: "numeric" }),
     location: event.location ?? undefined,

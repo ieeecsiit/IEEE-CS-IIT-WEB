@@ -4,10 +4,13 @@ import { Container, SectionTitle } from "./_components/container";
 import { EventGrid } from "./_components/event-grid";
 import { Reveal } from "./_components/reveal";
 import { SiteImage } from "./_components/site-image";
+import { JsonLd } from "./_components/json-ld";
 import { Typewriter } from "./_components/typewriter";
 import { WhoWeAre } from "./_components/who-we-are";
 import { getBlogPosts } from "./_data/blogs";
 import { getEvents } from "./_data/events";
+import { breadcrumbSchema, eventListSchema, graph, webPageSchema } from "./_lib/jsonld";
+import { SITE_DESCRIPTION, SITE_NAME } from "./_lib/seo";
 
 const stats = [
   { value: "2017", label: "Onwards", card: "bg-brand", dot: "bg-[#0f0f0f]" },
@@ -34,6 +37,13 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd
+        data={graph(
+          webPageSchema({ path: "/", name: SITE_NAME, description: SITE_DESCRIPTION }),
+          breadcrumbSchema("/", []),
+          eventListSchema(events.slice(0, 3)),
+        )}
+      />
       <section className="relative flex h-screen items-center justify-center bg-radial from-brand to-white">
         <h1 className="sr-only">IEEE Computer Society Student Branch Chapter of IIT</h1>
         <SiteImage

@@ -16,8 +16,12 @@ export type Event = {
   title: string;
   /** First paragraph of the description, as plain text, for link previews. */
   summary?: string;
+  /** The description and sessions as plain-text paragraphs, for llms-full.txt. */
+  text: string[];
   /** ISO timestamp of the (first) event day. */
   date: string;
+  /** ISO timestamp of the last CMS edit, for the sitemap. */
+  updatedAt: string;
   dateLabel: string;
   monthLabel: string;
   location?: string;
@@ -38,6 +42,8 @@ export type BlogPost = {
   title: string;
   /** ISO timestamp the post went live, used for ordering. */
   date: string;
+  /** ISO timestamp of the last CMS edit, for the sitemap. */
+  updatedAt: string;
   badge?: string;
   author: string;
   authorImage?: Photo;
@@ -49,6 +55,8 @@ export type BlogPost = {
   overview?: string[];
   /** Rendered by the CMS's own rich text converter, which escapes text and strips unsafe link URLs. */
   html: string;
+  /** The body as plain-text sections, for llms-full.txt and word counts. */
+  sections: BlogSection[];
   readMoreUrl?: string;
 };
 

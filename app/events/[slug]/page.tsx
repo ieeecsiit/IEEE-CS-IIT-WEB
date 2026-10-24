@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/app/_components/container";
+import { JsonLd } from "@/app/_components/json-ld";
 import { PageHeader } from "@/app/_components/page-header";
 import { PhotoGallery } from "@/app/_components/photo-gallery";
 import { getEvent, getEvents } from "@/app/_data/events";
 import type { ContentBlock } from "@/app/_data/types";
+import { breadcrumbSchema, eventSchema, graph, webPageSchema } from "@/app/_lib/jsonld";
+import { pageMetadata } from "@/app/_lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,11 +20,13 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEvent((await params).slug);
   if (!event) return {};
-  return {
+  return pageMetadata({
     title: event.title,
-    description: event.summary,
-    openGraph: { title: event.title, description: event.summary, images: [event.coverImage.src] },
-  };
+    description: event.summary ?? `${event.title}, held ${event.dateLabel} by the IEEE Computer Society Student Branch Chapter of IIT.`,
+    path: `/events/${event.slug}`,
+    image: { url: event.coverImage.src, width: event.coverImage.width, height: event.coverImage.height, alt: event.coverImage.alt },
+    keywords: [event.title],
+  });
 }
 
 function Block({ block }: { block: ContentBlock }) {
@@ -41,12 +46,27 @@ export default async function EventPage({ params }: Props) {
 
   return (
     <>
-      <PageHeader title="Our Events" />
+      <JsonLd
+        data={graph(
+          webPageSchema({
+            path: `/events/${event.slug}`,
+            name: event.title,
+            description: event.summary ?? event.title,
+            image: event.coverImage.src,
+          }),
+          breadcrumbSchema(`/events/${event.slug}`, [
+            { name: "Our Events", path: "/events" },
+            { name: event.title, path: `/events/${event.slug}` },
+          ]),
+          eventSchema(event),
+        )}
+      />
+      <PageHeader title="Our Events" titleAs="p" />
       <section className="py-[50px]">
         <Container>
           <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-[50px]">
             <div>
-              <h2 className="mt-0 mb-10 text-[50px] leading-10 font-extralight text-black uppercase">{event.title}</h2>
+              <h1 className="mt-0 mb-10 text-[50px] leading-10 font-extralight text-black uppercase">{event.title}</h1>
               <div className="grid grid-cols-[1.2fr_0.5fr] gap-2.5 text-black max-sm:grid-cols-1 max-sm:gap-[35px]">
                 <div className={detailItem}>
                   <h3 className={detailHeading}>About the event</h3>

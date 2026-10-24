@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { Container } from "@/app/_components/container";
+import { JsonLd } from "@/app/_components/json-ld";
 import { PageHeader } from "@/app/_components/page-header";
+import { breadcrumbSchema, graph, webPageSchema } from "@/app/_lib/jsonld";
+import { pageMetadata } from "@/app/_lib/seo";
 import { ContactForm } from "./contact-form";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Get in touch with the IEEE Computer Society Student Branch Chapter of IIT.",
-};
+const description =
+  "Get in touch with the IEEE Computer Society Student Branch Chapter of IIT: email ieeecs@iit.ac.lk, visit us at No 10, Trelawney Place, Colombo 04, or send us a message.";
+
+export const metadata: Metadata = pageMetadata({ title: "Contact", description, path: "/contact" });
 
 const contacts = [
   { phone: "+94704460101", label: "+94 70 446 0101 - Kithsara Medawewa" },
@@ -18,6 +21,12 @@ const address = ["IEEE Computer Society SBC of IIT", "No 10,", "Trelawney Place,
 export default function ContactPage() {
   return (
     <>
+      <JsonLd
+        data={graph(
+          webPageSchema({ path: "/contact", name: "Contact", description, type: "ContactPage" }),
+          breadcrumbSchema("/contact", [{ name: "Contact", path: "/contact" }]),
+        )}
+      />
       <PageHeader title="contact" />
       <section className="pt-[100px] pb-[50px]">
         <Container>
