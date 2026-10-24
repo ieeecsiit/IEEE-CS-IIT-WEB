@@ -1,6 +1,5 @@
 import "server-only";
 
-import { PHASE_PRODUCTION_BUILD } from "next/constants";
 import type { Photo } from "./types";
 
 /**
@@ -9,9 +8,6 @@ import type { Photo } from "./types";
  * read-only, so no credentials are needed.
  */
 export const CMS_URL = (process.env.CMS_URL ?? "https://ieee.iit.ac.lk").replace(/\/$/, "");
-
-/** Fallback refresh interval, in case a change notification from the CMS is missed. */
-const REVALIDATE_SECONDS = 300;
 
 // Subset of the CMS's generated `Media` type that this site reads.
 export type CmsMedia = {
@@ -39,30 +35,28 @@ export function withoutBlankParagraphs(html: string) {
   return html.replace(/<p\b[^>]*>(?:\s|&nbsp;|&zwj;|‍|<br\s*\/?>)*<\/p>/gi, "");
 }
 
+/** One request per collection per build process, shared by every page that lists it. */
+const requests = new Map<string, Promise<unknown[]>>();
+
 /**
- * Every doc of a collection matching `query`, cached under `tag` so
- * `/api/revalidate` can clear it when the CMS changes. `label` names the
- * content in errors.
+ * Every doc of a collection matching `query`. The site is exported as static files, so this
+ * runs only at build time; the CMS triggers a rebuild when content changes.
+ *
+ * A failed request fails the build on purpose: Cloudflare Pages then keeps serving the last
+ * good deployment, instead of publishing a site with no events or posts.
  */
-export async function fetchCollection<T>(
-  collection: string,
-  query: Record<string, string>,
-  tag: string,
-  label: string,
-): Promise<T[]> {
-  try {
-    const response = await fetch(`${CMS_URL}/api/${collection}?${new URLSearchParams(query)}`, {
-      next: { revalidate: REVALIDATE_SECONDS, tags: [tag] },
-    });
-    if (!response.ok) throw new Error(`${response.status} ${await response.text()}`);
-    return ((await response.json()) as { docs: T[] }).docs;
-  } catch (error) {
-    // A build has no earlier copy to fall back on, so it goes ahead without them.
-    if (process.env.NEXT_PHASE === PHASE_PRODUCTION_BUILD) {
-      console.error(`Could not load ${label} from ${CMS_URL}:`, error);
-      return [];
-    }
-    // At runtime, failing the refresh keeps the last good page cached instead of an empty list.
-    throw new Error(`Could not load ${label} from ${CMS_URL}`, { cause: error });
+export function fetchCollection<T>(collection: string, query: Record<string, string>, label: string): Promise<T[]> {
+  const url = `${CMS_URL}/api/${collection}?${new URLSearchParams(query)}`;
+  if (!requests.has(url)) {
+    requests.set(
+      url,
+      fetch(url).then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Could not load ${label} from ${CMS_URL}: ${response.status} ${await response.text()}`);
+        }
+        return ((await response.json()) as { docs: unknown[] }).docs;
+      }),
+    );
   }
+  return requests.get(url) as Promise<T[]>;
 }

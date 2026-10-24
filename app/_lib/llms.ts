@@ -25,15 +25,6 @@ import {
 /** Null for an empty section, so it drops out without breaking the blank lines between blocks. */
 const section = (title: string, lines: string[]) => (lines.length ? `## ${title}\n\n${lines.join("\n")}` : null);
 
-/** The event and post lists are a bonus; a CMS outage should shorten the file, not break it. */
-async function orEmpty<T>(load: () => Promise<T[]>): Promise<T[]> {
-  try {
-    return await load();
-  } catch {
-    return [];
-  }
-}
-
 const eventLine = (event: Event) =>
   `- [${event.title}](${absoluteUrl(`/events/${event.slug}`)}): ${event.dateLabel}${event.location ? `, ${event.location}` : ""}.${event.summary ? ` ${event.summary}` : ""}`;
 
@@ -58,7 +49,7 @@ function postText(post: BlogPost) {
 }
 
 export async function buildLlmsTxt({ full }: { full: boolean }) {
-  const [events, posts] = await Promise.all([orEmpty(getEvents), orEmpty(getBlogPosts)]);
+  const [events, posts] = await Promise.all([getEvents(), getBlogPosts()]);
 
   const blocks = [
     `# ${SITE_NAME}`,
@@ -92,10 +83,5 @@ export async function buildLlmsTxt({ full }: { full: boolean }) {
   ];
 
   const body = `${blocks.filter((block): block is string => block !== null).join("\n\n")}\n`;
-  return new Response(body, {
-    headers: {
-      "Content-Type": "text/plain; charset=utf-8",
-      "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
-    },
-  });
+  return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }

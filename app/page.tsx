@@ -30,8 +30,6 @@ const joinLinks = [
   },
 ];
 
-export const revalidate = 300;
-
 export default async function HomePage() {
   const [events, blogPosts] = await Promise.all([getEvents(), getBlogPosts()]);
 

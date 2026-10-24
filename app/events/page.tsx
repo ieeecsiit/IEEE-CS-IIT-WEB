@@ -7,8 +7,6 @@ import { getEvents } from "@/app/_data/events";
 import { breadcrumbSchema, eventListSchema, graph, webPageSchema } from "@/app/_lib/jsonld";
 import { pageMetadata } from "@/app/_lib/seo";
 
-export const revalidate = 300;
-
 const description =
   "Hackathons, competitive programming contests, web development workshops and career guidance series run by the IEEE Computer Society Student Branch Chapter of IIT, including CodeRally, IndustPro, WebSpire and Commit.dev.";
 

@@ -11,7 +11,8 @@ import { pageMetadata } from "@/app/_lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const revalidate = 300;
+// Exported as static files, so only the pages generated at build time exist.
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   return (await getEvents()).map(({ slug }) => ({ slug }));

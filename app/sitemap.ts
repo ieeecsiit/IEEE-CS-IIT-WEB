@@ -4,26 +4,15 @@ import { getEvents } from "./_data/events";
 import { executiveCommittee, standingCommittee } from "./_data/team";
 import { OG_IMAGE, absoluteUrl } from "./_lib/seo";
 
-/**
- * Served at /sitemap.xml, with image entries so event and blog photos show up in image search.
- * Refreshed alongside the CMS content it lists.
- */
-export const revalidate = 300;
-
 /** Newest of a set of ISO timestamps, so a listing page changes when one of its items does. */
 const latest = (dates: string[]) => (dates.length ? new Date(dates.reduce((a, b) => (a > b ? a : b))) : undefined);
 
-/** A CMS outage shouldn't take the sitemap down: crawlers back off after a 500 here. */
-async function orEmpty<T>(load: () => Promise<T[]>): Promise<T[]> {
-  try {
-    return await load();
-  } catch {
-    return [];
-  }
-}
+// Written to a file at build time; the site is exported as static files.
+export const dynamic = "force-static";
 
+/** Served at /sitemap.xml, with image entries so event and blog photos show up in image search. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [events, posts] = await Promise.all([orEmpty(getEvents), orEmpty(getBlogPosts)]);
+  const [events, posts] = await Promise.all([getEvents(), getBlogPosts()]);
   const eventsUpdated = latest(events.map((event) => event.updatedAt));
   const postsUpdated = latest(posts.map((post) => post.updatedAt));
   const anyUpdated = latest([...events, ...posts].map((item) => item.updatedAt));
