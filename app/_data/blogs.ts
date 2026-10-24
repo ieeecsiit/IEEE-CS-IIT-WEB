@@ -1,6 +1,99 @@
-import type { BlogPost } from "./types";
+import "server-only";
 
-export const blogPosts: BlogPost[] = [
+import { fetchCollection, toPhoto, type CmsMedia } from "./cms";
+import imageSizes from "./image-sizes.json";
+import type { BlogPost, BlogSection, Photo } from "./types";
+
+/** Cache tag on the blog list; `/api/revalidate` clears it when the CMS changes. */
+export const BLOGS_TAG = "cms-blogs";
+
+// Subset of the CMS's generated `Blog` type that this site reads.
+type CmsBlog = {
+  slug: string;
+  title: string;
+  badge?: string | null;
+  excerpt?: string | null;
+  author: { name: string; image?: number | CmsMedia | null };
+  coverImage: number | CmsMedia;
+  cardImage?: number | CmsMedia | null;
+  contentHtml: string;
+  sections: BlogSection[];
+  readMoreUrl?: string | null;
+};
+
+function toPost(blog: CmsBlog): BlogPost | undefined {
+  const image = toPhoto(blog.coverImage, blog.title);
+  if (!image) return undefined;
+  return {
+    slug: blog.slug,
+    title: blog.title,
+    badge: blog.badge ?? undefined,
+    author: blog.author.name,
+    authorImage: toPhoto(blog.author.image, blog.author.name),
+    cardImage: toPhoto(blog.cardImage, blog.title) ?? image,
+    image,
+    summary: blog.excerpt?.trim() || blog.sections[0]?.paragraphs[0],
+    body: { type: "html", html: blog.contentHtml },
+    readMoreUrl: blog.readMoreUrl ?? undefined,
+  };
+}
+
+// The posts written before the CMS had a blog. A CMS post with the same slug
+// replaces its hand-written one, so these can be moved over one at a time.
+type LegacyPost = {
+  slug: string;
+  title: string;
+  badge: string;
+  author: string;
+  authorImage: string;
+  cardImage: string;
+  image: string;
+  imageAlt: string;
+  sections: BlogSection[];
+  mediumUrl: string;
+};
+
+const sizes: Record<string, number[]> = imageSizes;
+
+function localPhoto(src: string, alt: string): Photo {
+  const [width, height] = sizes[src] ?? [];
+  if (!width || !height) throw new Error(`Unknown image "${src}". Run \`npm run images\` after adding it.`);
+  return { src, width, height, alt };
+}
+
+function fromLegacy(post: LegacyPost): BlogPost {
+  return {
+    slug: post.slug,
+    title: post.title,
+    badge: post.badge,
+    author: post.author,
+    authorImage: localPhoto(post.authorImage, post.author),
+    cardImage: localPhoto(post.cardImage, ""),
+    image: localPhoto(post.image, post.imageAlt),
+    summary: post.sections[0]?.paragraphs[0],
+    body: { type: "sections", sections: post.sections },
+    readMoreUrl: post.mediumUrl,
+  };
+}
+
+/** Published CMS posts, newest first, then any hand-written ones they haven't replaced. */
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  const docs = await fetchCollection<CmsBlog>(
+    "blogs",
+    { sort: "-publishedDate", depth: "1", limit: "100" },
+    BLOGS_TAG,
+    "blog posts",
+  );
+  const posts = docs.map(toPost).filter((post): post is BlogPost => !!post);
+  const slugs = new Set(posts.map((post) => post.slug));
+  return [...posts, ...legacyPosts.filter((post) => !slugs.has(post.slug)).map(fromLegacy)];
+}
+
+export async function getBlogPost(slug: string) {
+  return (await getBlogPosts()).find((post) => post.slug === slug);
+}
+
+const legacyPosts: LegacyPost[] = [
   {
     slug: "multimodal-ai",
     title: "Did You Know? Multimodal AI Is Teaching Machines to See, Hear, and Understand Together",
@@ -154,7 +247,3 @@ export const blogPosts: BlogPost[] = [
     ],
   },
 ];
-
-export function getBlogPost(slug: string) {
-  return blogPosts.find((post) => post.slug === slug);
-}

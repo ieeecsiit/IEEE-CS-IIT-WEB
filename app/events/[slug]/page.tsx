@@ -17,15 +17,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = await getEvent((await params).slug);
   if (!event) return {};
-  const description = event.content.find((block) => block.type === "paragraph")?.text;
   return {
     title: event.title,
-    description,
-    openGraph: { title: event.title, description, images: [event.coverImage.src] },
+    description: event.summary,
+    openGraph: { title: event.title, description: event.summary, images: [event.coverImage.src] },
   };
 }
 
 function Block({ block }: { block: ContentBlock }) {
+  if (block.type === "html") {
+    return <div className="rich-text mb-5 last:mb-0" dangerouslySetInnerHTML={{ __html: block.html }} />;
+  }
   return block.type === "heading" ? <h4>{block.text}</h4> : <p className="mb-5 last:mb-0">{block.text}</p>;
 }
 

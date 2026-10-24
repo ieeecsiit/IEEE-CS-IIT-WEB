@@ -1,4 +1,8 @@
-export type ContentBlock = { type: "paragraph"; text: string } | { type: "heading"; text: string };
+export type ContentBlock =
+  | { type: "paragraph"; text: string }
+  | { type: "heading"; text: string }
+  /** Rendered by the CMS's own rich text converter, which escapes text and strips unsafe link URLs. */
+  | { type: "html"; html: string };
 
 export type Photo = {
   src: string;
@@ -10,6 +14,8 @@ export type Photo = {
 export type Event = {
   slug: string;
   title: string;
+  /** First paragraph of the description, as plain text, for link previews. */
+  summary?: string;
   /** ISO timestamp of the (first) event day. */
   date: string;
   dateLabel: string;
@@ -30,14 +36,16 @@ export type BlogSection = {
 export type BlogPost = {
   slug: string;
   title: string;
-  badge: string;
+  badge?: string;
   author: string;
-  authorImage: string;
-  cardImage: string;
-  image: string;
-  imageAlt: string;
-  sections: BlogSection[];
-  mediumUrl: string;
+  authorImage?: Photo;
+  cardImage: Photo;
+  image: Photo;
+  /** Plain text, for link previews. */
+  summary?: string;
+  /** Posts written in the CMS come as HTML; the original hand-written ones as sections. */
+  body: { type: "html"; html: string } | { type: "sections"; sections: BlogSection[] };
+  readMoreUrl?: string;
 };
 
 export type TeamMember = {

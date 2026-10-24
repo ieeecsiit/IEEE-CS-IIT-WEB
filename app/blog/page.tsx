@@ -2,14 +2,18 @@ import type { Metadata } from "next";
 import { BlogList } from "@/app/_components/blog-list";
 import { Container, SectionTitle } from "@/app/_components/container";
 import { PageHeader } from "@/app/_components/page-header";
-import { blogPosts } from "@/app/_data/blogs";
+import { getBlogPosts } from "@/app/_data/blogs";
 
 export const metadata: Metadata = {
   title: "Blog",
   description: "StackMedium winning articles written by IIT undergraduates.",
 };
 
-export default function BlogPage() {
+export const revalidate = 300;
+
+export default async function BlogPage() {
+  const blogPosts = await getBlogPosts();
+
   return (
     <>
       <PageHeader title="blog" />

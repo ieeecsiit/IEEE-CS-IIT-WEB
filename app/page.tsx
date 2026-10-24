@@ -6,7 +6,7 @@ import { Reveal } from "./_components/reveal";
 import { SiteImage } from "./_components/site-image";
 import { Typewriter } from "./_components/typewriter";
 import { WhoWeAre } from "./_components/who-we-are";
-import { blogPosts } from "./_data/blogs";
+import { getBlogPosts } from "./_data/blogs";
 import { getEvents } from "./_data/events";
 
 const stats = [
@@ -30,7 +30,7 @@ const joinLinks = [
 export const revalidate = 300;
 
 export default async function HomePage() {
-  const events = await getEvents();
+  const [events, blogPosts] = await Promise.all([getEvents(), getBlogPosts()]);
 
   return (
     <>
