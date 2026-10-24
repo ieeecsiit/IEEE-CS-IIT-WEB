@@ -1,6 +1,6 @@
 import "server-only";
 
-import { fetchCollection, toPhoto, type CmsMedia } from "./cms";
+import { fetchCollection, toPhoto, type CmsMedia, withoutBlankParagraphs } from "./cms";
 import type { ContentBlock, Event, Photo } from "./types";
 
 /** Cache tag on the event list; `/api/revalidate` clears it when the CMS changes. */
@@ -42,7 +42,7 @@ function toContent(event: CmsEvent): ContentBlock[] {
     paragraphs(value).map((paragraph) => ({ type: "paragraph", text: paragraph }));
 
   return [
-    ...(event.contentHtml ? [{ type: "html", html: event.contentHtml } as const] : text(event.description)),
+    ...(event.contentHtml ? [{ type: "html", html: withoutBlankParagraphs(event.contentHtml) } as const] : text(event.description)),
     ...(event.sessions ?? []).flatMap((session): ContentBlock[] => [
       { type: "heading", text: session.title },
       ...text(session.description ?? ""),

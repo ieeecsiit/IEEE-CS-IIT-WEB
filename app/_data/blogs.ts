@@ -1,6 +1,6 @@
 import "server-only";
 
-import { fetchCollection, toPhoto, type CmsMedia } from "./cms";
+import { fetchCollection, toPhoto, withoutBlankParagraphs, type CmsMedia } from "./cms";
 import imageSizes from "./image-sizes.json";
 import type { BlogPost, BlogSection, Photo } from "./types";
 
@@ -11,6 +11,7 @@ export const BLOGS_TAG = "cms-blogs";
 type CmsBlog = {
   slug: string;
   title: string;
+  publishedDate?: string | null;
   badge?: string | null;
   excerpt?: string | null;
   author: { name: string; image?: number | CmsMedia | null };
@@ -27,13 +28,19 @@ function toPost(blog: CmsBlog): BlogPost | undefined {
   return {
     slug: blog.slug,
     title: blog.title,
+    date: blog.publishedDate ?? new Date(0).toISOString(),
     badge: blog.badge ?? undefined,
     author: blog.author.name,
     authorImage: toPhoto(blog.author.image, blog.author.name),
     cardImage: toPhoto(blog.cardImage, blog.title) ?? image,
     image,
     summary: blog.excerpt?.trim() || blog.sections[0]?.paragraphs[0],
-    body: { type: "html", html: blog.contentHtml },
+    // The excerpt doubles as the post's intro, the way the hand-written posts open with an overview.
+    overview: blog.excerpt
+      ?.split(/\n\s*\n/)
+      .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
+      .filter(Boolean),
+    body: { type: "html", html: withoutBlankParagraphs(blog.contentHtml) },
     readMoreUrl: blog.readMoreUrl ?? undefined,
   };
 }
@@ -43,6 +50,7 @@ function toPost(blog: CmsBlog): BlogPost | undefined {
 type LegacyPost = {
   slug: string;
   title: string;
+  date: string;
   badge: string;
   author: string;
   authorImage: string;
@@ -65,6 +73,7 @@ function fromLegacy(post: LegacyPost): BlogPost {
   return {
     slug: post.slug,
     title: post.title,
+    date: post.date,
     badge: post.badge,
     author: post.author,
     authorImage: localPhoto(post.authorImage, post.author),
@@ -76,7 +85,7 @@ function fromLegacy(post: LegacyPost): BlogPost {
   };
 }
 
-/** Published CMS posts, newest first, then any hand-written ones they haven't replaced. */
+/** Published CMS posts plus any hand-written ones they haven't replaced, newest first. */
 export async function getBlogPosts(): Promise<BlogPost[]> {
   const docs = await fetchCollection<CmsBlog>(
     "blogs",
@@ -86,7 +95,9 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   );
   const posts = docs.map(toPost).filter((post): post is BlogPost => !!post);
   const slugs = new Set(posts.map((post) => post.slug));
-  return [...posts, ...legacyPosts.filter((post) => !slugs.has(post.slug)).map(fromLegacy)];
+  return [...posts, ...legacyPosts.filter((post) => !slugs.has(post.slug)).map(fromLegacy)].sort((a, b) =>
+    b.date.localeCompare(a.date),
+  );
 }
 
 export async function getBlogPost(slug: string) {
@@ -96,6 +107,7 @@ export async function getBlogPost(slug: string) {
 const legacyPosts: LegacyPost[] = [
   {
     slug: "multimodal-ai",
+    date: "2026-01-01T00:00:00.000Z",
     title: "Did You Know? Multimodal AI Is Teaching Machines to See, Hear, and Understand Together",
     badge: "January Winner",
     author: "Lidiya Rajapakse",
@@ -135,6 +147,7 @@ const legacyPosts: LegacyPost[] = [
   },
   {
     slug: "home-robot",
+    date: "2025-11-01T00:00:00.000Z",
     title: "Who Is Driving Your Home Robot?",
     badge: "November Winner",
     author: "Hirushi Jayasekara",
@@ -172,6 +185,7 @@ const legacyPosts: LegacyPost[] = [
   },
   {
     slug: "ai-in-2025",
+    date: "2025-10-01T00:00:00.000Z",
     title: "AI in 2025: Rethinking How We Innovate and Create",
     badge: "October Winner",
     author: "S. H. Biyoni Pietersz",
@@ -210,6 +224,7 @@ const legacyPosts: LegacyPost[] = [
   },
   {
     slug: "generative-ai-takeover",
+    date: "2025-09-01T00:00:00.000Z",
     title: "From Canvas to Code: The Generative AI Takeover",
     badge: "September Winner",
     author: "E.M Achintha Isuranga Ekanayake",

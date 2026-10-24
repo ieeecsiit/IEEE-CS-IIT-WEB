@@ -32,6 +32,14 @@ export function toPhoto(media: number | CmsMedia | null | undefined, fallbackAlt
 }
 
 /**
+ * Drops paragraphs with nothing visible in them. Text pasted from the old site carries
+ * `<p>&zwj;</p>` spacers, which would otherwise add a blank line between every section.
+ */
+export function withoutBlankParagraphs(html: string) {
+  return html.replace(/<p\b[^>]*>(?:\s|&nbsp;|&zwj;|‍|<br\s*\/?>)*<\/p>/gi, "");
+}
+
+/**
  * Every doc of a collection matching `query`, cached under `tag` so
  * `/api/revalidate` can clear it when the CMS changes. `label` names the
  * content in errors.

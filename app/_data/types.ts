@@ -36,6 +36,8 @@ export type BlogSection = {
 export type BlogPost = {
   slug: string;
   title: string;
+  /** ISO timestamp the post went live, used for ordering. */
+  date: string;
   badge?: string;
   author: string;
   authorImage?: Photo;
@@ -43,6 +45,8 @@ export type BlogPost = {
   image: Photo;
   /** Plain text, for link previews. */
   summary?: string;
+  /** Intro paragraphs shown under an "Overview" heading above the body. */
+  overview?: string[];
   /** Posts written in the CMS come as HTML; the original hand-written ones as sections. */
   body: { type: "html"; html: string } | { type: "sections"; sections: BlogSection[] };
   readMoreUrl?: string;

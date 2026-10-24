@@ -59,6 +59,16 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
             <article className="rounded-[5px] border border-line p-[30px] text-black max-xs:p-5">
               <blockquote className="mt-[26px] mb-9">By {post.author}</blockquote>
+              {!!post.overview?.length && (
+                <section className="mb-[26px]">
+                  <h4>Overview</h4>
+                  {post.overview.map((paragraph) => (
+                    <p key={paragraph} className="mb-[26px] last:mb-0">
+                      {paragraph}
+                    </p>
+                  ))}
+                </section>
+              )}
               {post.body.type === "html" ? (
                 // Rendered by the CMS's own rich text converter, which escapes
                 // text and strips unsafe link URLs.
