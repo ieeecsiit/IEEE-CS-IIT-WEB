@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/app/_components/container";
 import { PageHeader } from "@/app/_components/page-header";
+import { PhotoGallery } from "@/app/_components/photo-gallery";
 import { getEvent, getEvents } from "@/app/_data/events";
 import type { ContentBlock } from "@/app/_data/types";
 
@@ -76,18 +76,7 @@ export default async function EventPage({ params }: Props) {
                 </a>
               )}
             </div>
-            <div className="flex flex-wrap content-start items-center gap-x-[3%]">
-              {event.gallery.map((photo, index) => (
-                <Image
-                  key={photo.src}
-                  {...photo}
-                  alt={photo.alt}
-                  sizes="(max-width: 767px) 48vw, 24vw"
-                  priority={index < 2}
-                  className="mb-2.5 h-auto w-[48%]"
-                />
-              ))}
-            </div>
+            <PhotoGallery photos={event.gallery} />
           </div>
         </Container>
       </section>

@@ -13,12 +13,14 @@ export function EventGrid({ events }: { events: Event[] }) {
       {events.map((event) => (
         <Reveal key={event.slug} from="bottom">
           <Link href={`/events/${event.slug}`} className="block text-black">
-            <div className="flex w-full max-w-[500px] items-center justify-center overflow-hidden">
+            {/* Fixed 4:3 frame, so portrait and landscape covers line up across the grid. */}
+            <div className="relative aspect-4/3 w-full max-w-[500px] overflow-hidden bg-line">
               <Image
-                {...event.coverImage}
+                src={event.coverImage.src}
                 alt={event.coverImage.alt}
+                fill
                 sizes="(max-width: 767px) 100vw, 33vw"
-                className="size-full object-cover"
+                className="object-cover"
               />
             </div>
             <h3 className="mt-[30px] mb-5 text-[40px] leading-10 font-extralight max-xs:text-[30px] max-xs:leading-[30px]">
