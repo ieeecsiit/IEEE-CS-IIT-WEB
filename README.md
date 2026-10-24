@@ -48,3 +48,22 @@ To turn on immediate updates, set the same random secret on both sites:
 ## Environment
 
 See `.env.example`. Set `NEXT_PUBLIC_SITE_URL` in production so social preview images get absolute URLs.
+
+## SEO
+
+Everything crawlers, social cards and AI assistants read comes from `app/_lib/seo.ts`
+(site name, description, URL, socials) and `app/_lib/jsonld.ts` (structured data).
+
+- **Metadata:** every page has a title, description, canonical URL, Open Graph and Twitter card.
+  Event and blog pages use their cover photo; the rest use `public/og-image.png`.
+- **JSON-LD:** Organization and WebSite on every page, plus a breadcrumb and the page's own type:
+  `Event` on event pages, `BlogPosting` on posts, `Blog`/`ItemList` on the lists, team members on About.
+- **`/sitemap.xml`:** every page, event and post, with their photos as image entries.
+- **`/robots.txt`:** everything allowed except `/api/`, AI crawlers allowed by name.
+- **`/llms.txt`** and **`/llms-full.txt`:** a plain-text summary for AI assistants; the full
+  version includes the text of every event and post.
+- **`/manifest.webmanifest`**, favicons (`app/icon.png`, `app/apple-icon.png`) and `public/logo.png`.
+- **Analytics:** Google Analytics 4 (`NEXT_PUBLIC_GA_ID`), production builds only.
+
+After deploying, submit `https://<site>/sitemap.xml` in Google Search Console and check a few pages
+with the [Rich Results Test](https://search.google.com/test/rich-results).

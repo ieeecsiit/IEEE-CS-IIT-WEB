@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Container } from "@/app/_components/container";
+import { JsonLd } from "@/app/_components/json-ld";
 import { PageHeader } from "@/app/_components/page-header";
 import { getBlogPost, getBlogPosts } from "@/app/_data/blogs";
+import { blogPostingSchema, breadcrumbSchema, graph, webPageSchema } from "@/app/_lib/jsonld";
+import { pageMetadata } from "@/app/_lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -17,10 +20,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getBlogPost((await params).slug);
   if (!post) return {};
   return {
-    title: post.title,
-    description: post.summary,
+    ...pageMetadata({
+      title: post.title,
+      description: post.summary ?? `${post.title}, by ${post.author}.`,
+      path: `/blog/${post.slug}`,
+      image: { url: post.image.src, width: post.image.width, height: post.image.height, alt: post.image.alt },
+      type: "article",
+      publishedTime: post.date,
+      modifiedTime: post.updatedAt,
+      authors: [post.author],
+      keywords: ["StackMedium", ...(post.badge ? [post.badge] : [])],
+    }),
     authors: [{ name: post.author }],
-    openGraph: { type: "article", title: post.title, description: post.summary, images: [post.image.src] },
   };
 }
 
@@ -30,7 +41,22 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <PageHeader title="Our Blogs" />
+      <JsonLd
+        data={graph(
+          webPageSchema({
+            path: `/blog/${post.slug}`,
+            name: post.title,
+            description: post.summary ?? post.title,
+            image: post.image.src,
+          }),
+          breadcrumbSchema(`/blog/${post.slug}`, [
+            { name: "Blog", path: "/blog" },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ]),
+          blogPostingSchema(post),
+        )}
+      />
+      <PageHeader title="Our Blogs" titleAs="p" />
       <section className="py-[50px]">
         <Container>
           <div className="grid grid-cols-2 gap-5 xl:gap-[50px] max-md:grid-cols-1 max-md:gap-[30px]">
@@ -42,9 +68,9 @@ export default async function BlogPostPage({ params }: Props) {
                       <span className="inline-block border border-brand px-5 py-2.5 text-black">{post.badge}</span>
                     </div>
                   )}
-                  <h2 className="m-0 text-[50px] leading-[50px] font-semibold text-black uppercase max-xs:text-[40px] max-xs:leading-10">
+                  <h1 className="m-0 text-[50px] leading-[50px] font-semibold text-black uppercase max-xs:text-[40px] max-xs:leading-10">
                     {post.title}
-                  </h2>
+                  </h1>
                 </div>
                 <Image
                   src={post.image.src}

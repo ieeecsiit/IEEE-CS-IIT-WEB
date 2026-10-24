@@ -11,6 +11,7 @@ type CmsBlog = {
   slug: string;
   title: string;
   publishedDate?: string | null;
+  updatedAt: string;
   badge?: string | null;
   excerpt?: string | null;
   author: { name: string; image?: number | CmsMedia | null };
@@ -27,7 +28,8 @@ function toPost(blog: CmsBlog): BlogPost | undefined {
   return {
     slug: blog.slug,
     title: blog.title,
-    date: blog.publishedDate ?? new Date(0).toISOString(),
+    date: blog.publishedDate ?? blog.updatedAt,
+    updatedAt: blog.updatedAt,
     badge: blog.badge ?? undefined,
     author: blog.author.name,
     authorImage: toPhoto(blog.author.image, blog.author.name),
@@ -40,6 +42,7 @@ function toPost(blog: CmsBlog): BlogPost | undefined {
       .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
       .filter(Boolean),
     html: withoutBlankParagraphs(blog.contentHtml),
+    sections: blog.sections,
     readMoreUrl: blog.readMoreUrl ?? undefined,
   };
 }
