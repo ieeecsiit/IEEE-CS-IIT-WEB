@@ -47,8 +47,8 @@ export type BlogPost = {
   summary?: string;
   /** Intro paragraphs shown under an "Overview" heading above the body. */
   overview?: string[];
-  /** Posts written in the CMS come as HTML; the original hand-written ones as sections. */
-  body: { type: "html"; html: string } | { type: "sections"; sections: BlogSection[] };
+  /** Rendered by the CMS's own rich text converter, which escapes text and strips unsafe link URLs. */
+  html: string;
   readMoreUrl?: string;
 };
 

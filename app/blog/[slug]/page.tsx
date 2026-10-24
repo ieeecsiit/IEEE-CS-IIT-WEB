@@ -69,22 +69,8 @@ export default async function BlogPostPage({ params }: Props) {
                   ))}
                 </section>
               )}
-              {post.body.type === "html" ? (
-                // Rendered by the CMS's own rich text converter, which escapes
-                // text and strips unsafe link URLs.
-                <div className="rich-text mb-[26px]" dangerouslySetInnerHTML={{ __html: post.body.html }} />
-              ) : (
-                post.body.sections.map((section) => (
-                  <section key={section.heading} className="mb-[26px]">
-                    {section.heading && <h4>{section.heading}</h4>}
-                    {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph} className="mb-[26px] last:mb-0">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </section>
-                ))
-              )}
+              {/* Rendered by the CMS's own rich text converter, which escapes text and strips unsafe link URLs. */}
+              <div className="rich-text mb-[26px]" dangerouslySetInnerHTML={{ __html: post.html }} />
               {post.readMoreUrl && (
                 <a
                   href={post.readMoreUrl}
