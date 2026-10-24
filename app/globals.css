@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* Breakpoints match the original Webflow layout (479 / 767 / 991 / 1440 / 1920). */
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1920px;
+
+  --font-sans: var(--font-clash), sans-serif;
+
+  --color-brand: #ffa300;
+  --color-ink: #1e1e1e;
+  --color-line: #e9e5e5;
+
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  --animate-typewriter:
+    typing 6s steps(80, end) infinite, fade-in 1s ease-in, shine 3s linear infinite;
+
+  @keyframes typing {
+    0% {
+      width: 0;
+    }
+    20%,
+    80% {
+      width: 100%;
+    }
+    100% {
+      width: 0;
+    }
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-white font-sans text-[22px] leading-7 text-black;
+  }
+
+  h2 {
+    @apply mt-5 mb-2.5 text-[32px] leading-9 font-semibold;
+  }
+
+  h4 {
+    @apply mt-0 mb-2.5 text-[30px] leading-7 font-normal;
+  }
+
+  h5 {
+    @apply mt-2.5 mb-2.5 text-sm leading-5 font-bold;
+  }
+
+  p {
+    @apply mb-0 leading-[26px];
+  }
+
+  ul {
+    @apply list-disc pl-10;
+  }
+
+  blockquote {
+    @apply mb-2.5 border-l-[5px] border-brand px-5 py-2.5 text-lg leading-[22px];
+  }
+
+  img {
+    @apply align-middle;
+  }
+}
+
+/* Blog posts and event descriptions written in the CMS's rich text editor, styled to match the
+   hand-written posts: each heading reads like their section <h4>. */
+@layer components {
+  .rich-text :is(h1, h2, h3, h4, h5, h6) {
+    @apply mt-[26px] mb-2.5 text-[30px] leading-9 font-normal first:mt-0;
+  }
+
+  .rich-text :is(p, ul, ol, blockquote) {
+    @apply mb-[26px] last:mb-0;
+  }
+
+  .rich-text ol {
+    @apply list-decimal pl-10;
+  }
+
+  .rich-text li + li {
+    @apply mt-2;
+  }
+
+  .rich-text a {
+    @apply underline decoration-brand underline-offset-4 transition-colors duration-300 hover:text-brand;
+  }
+
+  .rich-text strong {
+    @apply font-semibold;
+  }
+
+  .rich-text code {
+    @apply rounded bg-line px-1.5 py-0.5 text-[0.85em];
+  }
+
+  .rich-text img {
+    @apply mb-[26px] h-auto w-full rounded-[5px];
+  }
+
+  .rich-text hr {
+    @apply my-[26px] border-line;
+  }
+}
