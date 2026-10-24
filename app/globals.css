@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+/* Breakpoints match the original Webflow layout (479 / 767 / 991 / 1440 / 1920). */
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1920px;
+
+  --font-sans: var(--font-clash), sans-serif;
+
+  --color-brand: #ffa300;
+  --color-ink: #1e1e1e;
+  --color-line: #e9e5e5;
+
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  --animate-typewriter:
+    typing 6s steps(80, end) infinite, fade-in 1s ease-in, shine 3s linear infinite;
+
+  @keyframes typing {
+    0% {
+      width: 0;
+    }
+    20%,
+    80% {
+      width: 100%;
+    }
+    100% {
+      width: 0;
+    }
+  }
+
+  @keyframes shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-white font-sans text-[22px] leading-7 text-black;
+  }
+
+  h2 {
+    @apply mt-5 mb-2.5 text-[32px] leading-9 font-semibold;
+  }
+
+  h4 {
+    @apply mt-0 mb-2.5 text-[30px] leading-7 font-normal;
+  }
+
+  h5 {
+    @apply mt-2.5 mb-2.5 text-sm leading-5 font-bold;
+  }
+
+  p {
+    @apply mb-0 leading-[26px];
+  }
+
+  ul {
+    @apply list-disc pl-10;
+  }
+
+  blockquote {
+    @apply mb-2.5 border-l-[5px] border-brand px-5 py-2.5 text-lg leading-[22px];
+  }
+
+  img {
+    @apply align-middle;
+  }
+}
