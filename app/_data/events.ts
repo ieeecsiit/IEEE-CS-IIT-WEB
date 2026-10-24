@@ -3,9 +3,6 @@ import "server-only";
 import { fetchCollection, toPhoto, type CmsMedia, withoutBlankParagraphs } from "./cms";
 import type { ContentBlock, Event, Photo } from "./types";
 
-/** Cache tag on the event list; `/api/revalidate` clears it when the CMS changes. */
-export const EVENTS_TAG = "cms-events";
-
 const TIME_ZONE = "Asia/Colombo";
 
 // Subset of the CMS's generated `Event` type that this site reads.
@@ -92,7 +89,6 @@ export async function getEvents(): Promise<Event[]> {
       depth: "1",
       limit: "100",
     },
-    EVENTS_TAG,
     "events",
   );
   return docs.map(toEvent).filter((event): event is Event => !!event);

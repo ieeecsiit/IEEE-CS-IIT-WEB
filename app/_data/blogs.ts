@@ -3,9 +3,6 @@ import "server-only";
 import { fetchCollection, toPhoto, withoutBlankParagraphs, type CmsMedia } from "./cms";
 import type { BlogPost, BlogSection } from "./types";
 
-/** Cache tag on the blog list; `/api/revalidate` clears it when the CMS changes. */
-export const BLOGS_TAG = "cms-blogs";
-
 // Subset of the CMS's generated `Blog` type that this site reads.
 type CmsBlog = {
   slug: string;
@@ -52,7 +49,6 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   const docs = await fetchCollection<CmsBlog>(
     "blogs",
     { sort: "-publishedDate", depth: "1", limit: "100" },
-    BLOGS_TAG,
     "blog posts",
   );
   return docs.map(toPost).filter((post): post is BlogPost => !!post);

@@ -1,0 +1,23 @@
+# Cloudflare Pages redirects: old static-site URLs, kept working after the move to Next.js.
+/index.html                /                              301
+/about.html                /about                         301
+/events.html               /events                        301
+/blog.html                 /blog                          301
+/contact.html              /contact                       301
+/singleblog-1.html         /blog/generative-ai-takeover   301
+/singleblog-2.html         /blog/ai-in-2025               301
+/singleblog-3.html         /blog/home-robot               301
+/singleblog-4.html         /blog/multimodal-ai            301
+# Event pages now come from the CMS under new slugs, so old event URLs land on the list.
+/stackmedium.html          /events                        301
+/commitdev.html            /events                        301
+/coderally6-0.html         /events                        301
+/CampusToCeo.html          /events                        301
+/industpro4-0.html         /events                        301
+/webspire2-0.html          /events                        301
+/coderally5-0.html         /events                        301
+/industpro3-0.html         /events                        301
+/webspire1-0.html          /events                        301
+/imagine-cup.html          /events                        301
+/after-party.html          /events                        301
+/postman.html              /events                        301

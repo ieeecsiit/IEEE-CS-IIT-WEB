@@ -1,19 +1,20 @@
 # IEEE Computer Society SBC of IIT — Website
 
-Built with Next.js (App Router), React, TypeScript and Tailwind CSS.
+Built with Next.js (App Router), React, TypeScript and Tailwind CSS, exported as a static site
+and hosted on Cloudflare Pages.
 
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build && npm start
+npm run build    # static site in out/
 ```
 
 ## Structure
 
 - `app/` — routes (`/`, `/about`, `/events`, `/events/[slug]`, `/blog`, `/blog/[slug]`, `/contact`)
 - `app/_components/` — shared UI
-- `app/_data/` — blog posts and team members (edit these to update content), plus the CMS events loader
-- Events come from the IEEE Student Branch site's Payload CMS (see below)
+- `app/_data/` — team members (edit `team.ts` to update the committee), plus the CMS loaders
+- Events and blog posts come from the IEEE Student Branch site's Payload CMS (see below)
 - `public/images/` — WebP images (each under 1 MB)
 
 ## Adding images
@@ -35,19 +36,35 @@ This site reads its public API (`CMS_URL`, default `https://ieee.iit.ac.lk`) and
 - **Society** is only `CS` (joint events with other societies are excluded)
 - **Show on Projects & Events page** is ticked
 
-Changes show up immediately: the CMS calls `POST /api/revalidate` after each CS event is saved or deleted,
-which clears this site's event cache. Pages also refresh every 5 minutes as a fallback. If the CMS is
-unreachable during a refresh, the last good copy keeps being served.
+Blog posts are managed in the same CMS, under **Blogs**; only published posts appear.
 
-To turn on immediate updates, set the same random secret on both sites:
+The site is static, so CMS content is fetched when it's built. To pick up changes automatically, the
+CMS triggers a rebuild through a Cloudflare Pages deploy hook after each CS event or blog post is saved
+or deleted; the change is live in a minute or two. If the CMS is unreachable during a build, the build
+fails and Pages keeps serving the previous deployment.
 
-- this site: `REVALIDATE_SECRET`
-- CMS server (`/root/srv/ieee-iit-site/.env`): `CS_SITE_REVALIDATE_SECRET`, plus
-  `CS_SITE_REVALIDATE_URL=https://<this site>/api/revalidate`
+## Deploying (Cloudflare Pages)
+
+Pages project settings (**Settings > Builds**):
+
+- **Framework preset:** Next.js (Static HTML Export)
+- **Build command:** `npm run build`
+- **Build output directory:** `out`
+- **Node version:** from `.node-version` (22)
+- **Environment variables:** `NEXT_PUBLIC_SITE_URL`, and optionally `CMS_URL`, `NEXT_PUBLIC_GA_ID`,
+  `GOOGLE_SITE_VERIFICATION` (see `.env.example`)
+
+Redirects for the old `.html` URLs are in `public/_redirects`, and cache and security headers in
+`public/_headers`; Pages reads both from the build output.
+
+To rebuild automatically on CMS changes, create a deploy hook (**Settings > Builds > Deploy hooks**,
+branch `main`) and set its URL on the CMS server (`/root/srv/ieee-iit-site/.env`) as
+`CS_SITE_REVALIDATE_URL`, leaving `CS_SITE_REVALIDATE_SECRET` blank. Each save starts one build, and
+the free plan allows 500 builds a month.
 
 ## Environment
 
-See `.env.example`. Set `NEXT_PUBLIC_SITE_URL` in production so social preview images get absolute URLs.
+See `.env.example`. All values are read at build time, so set them as Pages environment variables.
 
 ## SEO
 
@@ -59,7 +76,7 @@ Everything crawlers, social cards and AI assistants read comes from `app/_lib/se
 - **JSON-LD:** Organization and WebSite on every page, plus a breadcrumb and the page's own type:
   `Event` on event pages, `BlogPosting` on posts, `Blog`/`ItemList` on the lists, team members on About.
 - **`/sitemap.xml`:** every page, event and post, with their photos as image entries.
-- **`/robots.txt`:** everything allowed except `/api/`, AI crawlers allowed by name.
+- **`/robots.txt`:** everything allowed, AI crawlers allowed by name.
 - **`/llms.txt`** and **`/llms-full.txt`:** a plain-text summary for AI assistants; the full
   version includes the text of every event and post.
 - **`/manifest.webmanifest`**, favicons (`app/icon.png`, `app/apple-icon.png`) and `public/logo.png`.
