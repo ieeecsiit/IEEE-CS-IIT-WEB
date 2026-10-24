@@ -7,7 +7,7 @@ import { SiteImage } from "./_components/site-image";
 import { Typewriter } from "./_components/typewriter";
 import { WhoWeAre } from "./_components/who-we-are";
 import { blogPosts } from "./_data/blogs";
-import { events } from "./_data/events";
+import { getEvents } from "./_data/events";
 
 const stats = [
   { value: "2017", label: "Onwards", card: "bg-brand", dot: "bg-[#0f0f0f]" },
@@ -27,7 +27,11 @@ const joinLinks = [
   },
 ];
 
-export default function HomePage() {
+export const revalidate = 300;
+
+export default async function HomePage() {
+  const events = await getEvents();
+
   return (
     <>
       <section className="relative flex h-screen items-center justify-center bg-radial from-brand to-white">

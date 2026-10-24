@@ -30,7 +30,7 @@ export function WhoWeAre() {
                 <div className="size-[30px] self-start rounded-[5px] border border-brand bg-brand xl:mb-5 xl:ml-5" />
               </div>
               <SiteImage
-                src="/images/webspire2-0/webspire2-1.webp"
+                src="/images/mission.webp"
                 alt=""
                 sizes="(max-width: 479px) 100vw, 240px"
                 className={`${missionImage} ml-10 xl:ml-5 max-xs:ml-0`}
@@ -48,7 +48,7 @@ export function WhoWeAre() {
             </div>
             <div className="flex items-center rounded-[10px] border border-line p-2.5 max-xs:block">
               <SiteImage
-                src="/images/stackmedium/home-our-vision-2.webp"
+                src="/images/vision.webp"
                 alt=""
                 sizes="(max-width: 479px) 100vw, 240px"
                 className={`${missionImage} xl:mr-5`}

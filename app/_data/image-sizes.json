@@ -1,36 +1,4 @@
 {
-  "/images/after-party/after-party-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/after-party/after-party-8.webp": [
-    1920,
-    1080
-  ],
   "/images/arrow-down-right.webp": [
     512,
     512
@@ -38,166 +6,6 @@
   "/images/bend-up-right-light.webp": [
     64,
     48
-  ],
-  "/images/campustoceo/campustoceo-1.webp": [
-    1587,
-    891
-  ],
-  "/images/campustoceo/campustoceo-2.webp": [
-    1669,
-    1113
-  ],
-  "/images/campustoceo/campustoceo-3.webp": [
-    741,
-    1113
-  ],
-  "/images/campustoceo/campustoceo-4.webp": [
-    1669,
-    1113
-  ],
-  "/images/campustoceo/campustoceo-5.webp": [
-    1669,
-    1113
-  ],
-  "/images/campustoceo/campustoceo-6.webp": [
-    1669,
-    1113
-  ],
-  "/images/campustoceo/campustoceo-7.webp": [
-    1669,
-    1113
-  ],
-  "/images/coderally5-0/coderally-5-0-24-hour-hackathon-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-10.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-11.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-8.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-9.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally5-0/coderally5-home.webp": [
-    1920,
-    1080
-  ],
-  "/images/coderally6-0/coderally6-0-1.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-10.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-11.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-12.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-13.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-2.webp": [
-    1920,
-    1103
-  ],
-  "/images/coderally6-0/coderally6-0-3.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-4.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-5.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-6.webp": [
-    1920,
-    1077
-  ],
-  "/images/coderally6-0/coderally6-0-7.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-8.webp": [
-    1920,
-    1280
-  ],
-  "/images/coderally6-0/coderally6-0-9.webp": [
-    1920,
-    1280
-  ],
-  "/images/commit-dev/commitdev-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/commit-dev/commitdev-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/commit-dev/commitdev-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/commit-dev/commitdev-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/commit-dev/commitdev-5.webp": [
-    1170,
-    1167
-  ],
-  "/images/commit-dev/commitdev-6.webp": [
-    1080,
-    1080
-  ],
-  "/images/commit-dev/commitdev-7.webp": [
-    1920,
-    1080
   ],
   "/images/email.webp": [
     512,
@@ -215,185 +23,17 @@
     1566,
     702
   ],
-  "/images/imagine-cup/imagine-cup-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/imagine-cup/imagine-cup-8.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-10.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-11.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-12.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-8.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro3-0/industpro-9.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-10.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-11.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-12.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-13.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-14.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-15.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-16.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/industpro4-0/industpro4-5.webp": [
-    1853,
-    1043
-  ],
-  "/images/industpro4-0/industpro4-6.webp": [
-    1838,
-    1034
-  ],
-  "/images/industpro4-0/industpro4-7.webp": [
-    1857,
-    1044
-  ],
-  "/images/industpro4-0/industpro4-8.webp": [
-    1848,
-    1039
-  ],
-  "/images/industpro4-0/industpro4-9.webp": [
-    1846,
-    1038
-  ],
-  "/images/industpro4-0/industpro4-home.webp": [
-    1920,
-    1080
-  ],
   "/images/linkedin.webp": [
     512,
     512
   ],
+  "/images/mission.webp": [
+    1920,
+    1080
+  ],
   "/images/plus.webp": [
     512,
     512
-  ],
-  "/images/postman/postman-1.webp": [
-    935,
-    526
-  ],
-  "/images/postman/postman-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/postman/postman-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/postman/postman-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/postman/postman-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/postman/postman-6.webp": [
-    1920,
-    1080
   ],
   "/images/stackmedium/achintha.webp": [
     200,
@@ -422,10 +62,6 @@
   "/images/stackmedium/hirushi-jayasekara-main.webp": [
     666,
     858
-  ],
-  "/images/stackmedium/home-our-vision-2.webp": [
-    1920,
-    1165
   ],
   "/images/stackmedium/january-win.webp": [
     1600,
@@ -458,30 +94,6 @@
   "/images/stackmedium/sep2025blog.webp": [
     512,
     341
-  ],
-  "/images/stackmedium/stackmedium-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/stackmedium/stackmedium-3.webp": [
-    1080,
-    1080
-  ],
-  "/images/stackmedium/stackmedium-4.webp": [
-    1080,
-    1080
-  ],
-  "/images/stackmedium/stackmedium-5.webp": [
-    1080,
-    1080
-  ],
-  "/images/stackmedium/stackmedium-6.webp": [
-    1081,
-    1351
-  ],
-  "/images/stackmedium/stackmedum-2.webp": [
-    1920,
-    1080
   ],
   "/images/team/adrian1.webp": [
     788,
@@ -535,84 +147,8 @@
     800,
     741
   ],
-  "/images/webspire1-0/webspire-1.webp": [
+  "/images/vision.webp": [
     1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire1-0/webspire-8.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-1.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-10.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-11.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-2.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-3.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-4.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-5.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-6.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-7.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-8.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-9.webp": [
-    1920,
-    1080
-  ],
-  "/images/webspire2-0/webspire2-home.webp": [
-    1920,
-    1080
+    1165
   ]
 }

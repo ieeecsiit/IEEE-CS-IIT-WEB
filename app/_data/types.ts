@@ -1,18 +1,25 @@
-export type ContentBlock =
-  | { type: "paragraph"; text: string }
-  | { type: "heading"; text: string }
-  | { type: "list"; items: string[] };
+export type ContentBlock = { type: "paragraph"; text: string } | { type: "heading"; text: string };
+
+export type Photo = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+};
 
 export type Event = {
   slug: string;
   title: string;
-  category: string;
-  year: string;
-  aboutHeading: string;
-  coverImage: string;
+  /** ISO timestamp of the (first) event day. */
+  date: string;
+  dateLabel: string;
+  monthLabel: string;
+  location?: string;
+  coverImage: Photo;
   content: ContentBlock[];
-  gallery: string[];
-  website?: string;
+  gallery: Photo[];
+  /** Only set while the event is still upcoming. */
+  registrationLink?: string;
 };
 
 export type BlogSection = {
