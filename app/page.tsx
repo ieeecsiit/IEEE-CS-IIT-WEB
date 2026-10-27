@@ -22,11 +22,11 @@ const stats = [
 const joinLinks = [
   {
     label: "Join as Member",
-    href: "https://docs.google.com/forms/d/e/1FAIpQLSemPpr4U7r-gbvnuoQ4KbZ6zF0mJDb6ob_H22CI2OAPxyI66Q/viewform?usp=dialog",
+    href: "https://docs.google.com/forms/d/1axf5zLUlSE3bkauzC3GV4UbEgj6hNz09nER-UZPNXbs/viewform",
   },
   {
     label: "Join as Volunteer",
-    href: "https://docs.google.com/forms/d/e/1FAIpQLSfpxw9R8z2diUb9NFS37GTZ9bFAN9nCWRNhvgV_50s7dE1n0w/viewform?usp=dialog",
+    href: "https://docs.google.com/forms/d/1XCQPdXQPVMu3WJTOL5Jl2ly0IuPsaDI_vUR795To2PI/viewform",
   },
 ];
 
