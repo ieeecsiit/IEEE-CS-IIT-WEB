@@ -4,6 +4,7 @@ import Script from "next/script";
 import { Footer } from "./_components/footer";
 import { JsonLd } from "./_components/json-ld";
 import { Navbar } from "./_components/navbar";
+import { Preloader } from "./_components/preloader";
 import { graph, organisationSchema, websiteSchema } from "./_lib/jsonld";
 import { ORGANISATION, SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL, pageMetadata } from "./_lib/seo";
 import "./globals.css";
@@ -54,6 +55,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={clashDisplay.variable}>
       <body>
+        <noscript>
+          <style>{`#preloader{display:none}body{overflow:visible!important}.hero-rise{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+        <Preloader />
         <JsonLd data={graph(organisationSchema(), websiteSchema())} />
         <Navbar />
         <main>{children}</main>

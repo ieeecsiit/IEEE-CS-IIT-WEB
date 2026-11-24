@@ -8,10 +8,10 @@ const heading = "my-0 flex-none text-[40px] leading-10 font-extralight uppercase
 
 export function WhoWeAre() {
   return (
-    <section className="pt-[150px]">
+    <section className="pt-[150px] max-sm:pt-24">
       <Container>
         <SectionTitle>who we are</SectionTitle>
-        <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1 max-md:gap-[60px]">
+        <div className="grid grid-cols-2 gap-5 max-md:grid-cols-1 max-md:gap-[60px] max-sm:gap-8">
           <Reveal from="left">
             <div className="mb-[30px] flex items-center text-black">
               <SiteImage src="/images/plus.webp" alt="" sizes="70px" className="w-[70px]" />

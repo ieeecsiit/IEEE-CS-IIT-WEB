@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "./container";
 import { SiteImage } from "./site-image";
 
@@ -19,45 +19,84 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const menuOpenRef = useRef(false);
 
-  // Hide while scrolling down, reveal while scrolling up.
+  useEffect(() => {
+    menuOpenRef.current = menuOpen;
+  }, [menuOpen]);
+
+  // Hide while scrolling down, reveal while scrolling up; drive the reading-progress bar without re-rendering.
   useEffect(() => {
     let lastScrollY = window.scrollY;
-    const onScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 50);
-      setHidden(currentScrollY > lastScrollY && currentScrollY > 150);
-      lastScrollY = currentScrollY;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progressRef.current?.style.setProperty("transform", `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`);
+      setScrolled(y > 30);
+      setHidden(y > lastScrollY && y > 150 && !menuOpenRef.current);
+      lastScrollY = y;
     };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
+
+  // Close the mobile menu on Escape.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
 
   return (
     <>
       <header
-        className={`fixed top-0 z-[9999] w-full transition-[translate,background-color,box-shadow] duration-300 ease-in-out ${
+        className={`fixed top-0 z-[9999] w-full transition-transform duration-500 ease-out-quart ${
           hidden ? "-translate-y-full" : ""
-        } ${scrolled ? "bg-white/95 py-[5px] shadow-[0_4px_15px_rgba(0,0,0,0.1)] backdrop-blur-[8px]" : ""}`}
+        }`}
       >
-        <div className="pt-10">
+        <div className={`transition-[padding] duration-500 ease-out-quart ${scrolled ? "pt-2" : "pt-4"}`}>
           <Container>
-            <div className="relative flex items-center justify-between rounded-[5px] border border-[#292929] bg-ink p-[25px]">
+            <div
+              className={`relative flex items-center justify-between rounded-2xl border border-white/10 transition-[padding,background-color,box-shadow] duration-500 ease-out-quart ${
+                scrolled
+                  ? "bg-ink/85 px-5 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl"
+                  : "bg-ink px-6 py-4 shadow-[0_6px_20px_rgba(0,0,0,0.12)]"
+              }`}
+            >
               <Link href="/" aria-label="Home" className="flex-none">
                 <SiteImage
                   src="/images/ieee-cs-sbc-of-iit-yellow-white.webp"
                   alt="IEEECS"
                   priority
-                  sizes="200px"
-                  className="w-[200px] max-sm:w-[150px] max-xs:w-[120px]"
+                  sizes="170px"
+                  className="w-[170px] max-sm:w-[140px] max-xs:w-[120px]"
                 />
               </Link>
+
               <nav
-                className={`ml-auto self-center max-md:absolute max-md:top-full max-md:right-0 max-md:left-0 max-md:z-[1000] max-md:w-full max-md:border max-md:border-white max-md:bg-black max-md:p-5 ${
-                  menuOpen ? "max-md:block" : "max-md:hidden"
+                aria-label="Main"
+                className={`ml-auto flex items-center gap-1 self-center max-md:absolute max-md:top-[calc(100%+8px)] max-md:right-0 max-md:left-0 max-md:origin-top max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:overflow-hidden max-md:rounded-2xl max-md:border max-md:border-white/10 max-md:bg-ink/95 max-md:p-3 max-md:shadow-[0_20px_40px_rgba(0,0,0,0.3)] max-md:backdrop-blur-xl max-md:transition-[opacity,transform,visibility] max-md:duration-300 max-md:ease-out-quart ${
+                  menuOpen
+                    ? "max-md:visible max-md:scale-100 max-md:opacity-100"
+                    : "max-md:invisible max-md:scale-95 max-md:opacity-0"
                 }`}
               >
-                {links.map(({ href, label }) => {
+                {links.map(({ href, label }, i) => {
                   const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
                   return (
                     <Link
@@ -65,34 +104,61 @@ export function Navbar() {
                       href={href}
                       onClick={() => setMenuOpen(false)}
                       aria-current={active ? "page" : undefined}
-                      className={`mx-[15px] inline-block border-b-2 py-2.5 text-[17px] font-light text-white uppercase hover:text-brand xl:text-xl max-md:m-0 max-md:block max-md:w-full max-md:border-b max-md:border-white/10 max-md:py-[15px] max-md:text-center max-md:last:border-b-0 ${
-                        active ? "border-brand max-md:text-brand" : "border-transparent"
-                      }`}
+                      style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
+                      className={`group relative rounded-lg px-4 py-2 text-[16px] font-normal tracking-wide uppercase transition-[color,background-color,opacity,transform] duration-300 hover:text-brand xl:text-[17px] max-md:py-3.5 max-md:text-center max-md:hover:bg-white/5 ${
+                        menuOpen ? "max-md:translate-y-0 max-md:opacity-100" : "max-md:translate-y-2 max-md:opacity-0"
+                      } ${active ? "text-brand" : "text-white"}`}
                     >
                       {label}
+                      <span
+                        aria-hidden
+                        className={`absolute right-4 bottom-1 left-4 h-0.5 origin-left rounded-full bg-brand transition-transform duration-300 ease-out-quart max-md:hidden ${
+                          active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                        }`}
+                      />
                     </Link>
                   );
                 })}
               </nav>
+
               <button
                 type="button"
-                aria-label="Toggle menu"
+                aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
                 onClick={() => setMenuOpen((open) => !open)}
-                className="order-1 ml-5 hidden cursor-pointer border border-white bg-transparent p-2 text-white max-md:block max-sm:ml-2.5"
+                className="order-1 ml-5 hidden size-11 cursor-pointer items-center justify-center rounded-xl border border-white/20 bg-white/5 text-white transition-colors hover:border-brand hover:text-brand max-md:flex max-sm:ml-2.5"
               >
-                <svg viewBox="0 0 24 24" className="size-6 max-xs:size-5" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M3 6h18M3 12h18M3 18h18" />
-                </svg>
+                <span className="relative block h-4 w-5">
+                  <span
+                    className={`absolute left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
+                      menuOpen ? "top-[7px] rotate-45" : "top-0"
+                    }`}
+                  />
+                  <span
+                    className={`absolute top-[7px] left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
+                      menuOpen ? "opacity-0" : "opacity-100"
+                    }`}
+                  />
+                  <span
+                    className={`absolute left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
+                      menuOpen ? "top-[7px] -rotate-45" : "top-[14px]"
+                    }`}
+                  />
+                </span>
               </button>
+
+              {/* Reading progress, clipped to the bar's rounded corners. */}
+              <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] overflow-hidden rounded-b-2xl">
+                <div ref={progressRef} className="h-full origin-left scale-x-0 bg-brand" />
+              </div>
             </div>
           </Container>
         </div>
       </header>
-      {/* Spacer matching the fixed header: 40px top + 2px border + 50px padding + logo height (1566x702). */}
+      {/* Spacer matching the unscrolled header: 16px top + 2px border + 32px padding + logo height (1566x702). */}
       <div
         aria-hidden
-        className="h-[calc(92px+200px*702/1566)] max-sm:h-[calc(92px+150px*702/1566)] max-xs:h-[calc(92px+120px*702/1566)]"
+        className="h-[calc(50px+170px*702/1566)] max-sm:h-[calc(50px+140px*702/1566)] max-xs:h-[calc(50px+120px*702/1566)]"
       />
     </>
   );
