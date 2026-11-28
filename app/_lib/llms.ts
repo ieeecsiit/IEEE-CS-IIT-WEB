@@ -61,6 +61,7 @@ export async function buildLlmsTxt({ full }: { full: boolean }) {
       `- [Events](${absoluteUrl("/events")}): Every event the chapter has run, with descriptions and photographs.`,
       `- [Blog](${absoluteUrl("/blog")}): StackMedium winning articles by IIT undergraduates.`,
       `- [Contact](${absoluteUrl("/contact")}): Address, email and a contact form.`,
+      `- [Merch store](${absoluteUrl("/merch")}): Coming soon.`,
       ...(full ? [] : [`- [Full text](${absoluteUrl("/llms-full.txt")}): Every event and blog post in full.`]),
     ]),
     section(

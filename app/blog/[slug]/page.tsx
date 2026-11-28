@@ -57,7 +57,7 @@ export default async function BlogPostPage({ params }: Props) {
           blogPostingSchema(post),
         )}
       />
-      <PageHeader title="Our Blogs" titleAs="p" />
+      <PageHeader title="Our blogs" titleAs="p" tagline="Stories and ideas from our members" />
       <section className="py-[50px]">
         <Container>
           <div className="grid grid-cols-2 gap-5 xl:gap-[50px] max-md:grid-cols-1 max-md:gap-[30px]">

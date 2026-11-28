@@ -1,0 +1,17 @@
+# Cloudflare Pages project config: the static site in out/ plus the Pages Functions in functions/.
+# See "Volunteer forms and admin panel" in README.md for the one-time setup.
+name = "ieee-cs-iit-web"
+pages_build_output_dir = "out"
+compatibility_date = "2026-11-01"
+
+# Volunteer forms, versions and responses.
+[[d1_databases]]
+binding = "DB"
+database_name = "ieee-cs-forms"
+database_id = "f3ecb02d-8518-4bf2-9e62-9df80558911d"
+migrations_dir = "migrations"
+
+# Files uploaded with responses (CVs, photos). Private: only served through /api/admin/files.
+[[r2_buckets]]
+binding = "FILES"
+bucket_name = "ieee-cs-form-uploads"

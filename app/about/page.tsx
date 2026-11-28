@@ -31,11 +31,11 @@ export default function AboutPage() {
           ]),
         )}
       />
-      <PageHeader title="about Us" />
+      <PageHeader title="About us" />
       <WhoWeAre />
       <section className="mx-auto max-w-[1200px] px-5 py-[100px]">
         <Container>
-          <SectionTitle>Our Team</SectionTitle>
+          <SectionTitle>Our team</SectionTitle>
           <div className="mx-auto max-w-[1200px] px-5 py-[100px]">
             <TeamGroup title="Executive Committee" members={executiveCommittee} />
             <TeamGroup title="Standing Committee Leads" members={standingCommittee} />

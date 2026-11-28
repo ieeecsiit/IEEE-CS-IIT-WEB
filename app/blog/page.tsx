@@ -29,10 +29,10 @@ export default async function BlogPage() {
           blogSchema(blogPosts),
         )}
       />
-      <PageHeader title="blog" />
+      <PageHeader title="Blog" tagline="Stories and ideas from our members" />
       <section className="pt-[150px]">
         <Container>
-          <SectionTitle>Our Blogs</SectionTitle>
+          <SectionTitle>Our blogs</SectionTitle>
           <BlogList posts={blogPosts} />
         </Container>
       </section>

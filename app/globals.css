@@ -14,140 +14,10 @@
   --color-brand: #ffa300;
   --color-ink: #1e1e1e;
   --color-line: #e9e5e5;
+  --color-ember: #e08a00;
+  --color-glow: #ffe6bd;
 
   --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
-
-  --animate-typewriter:
-    typing 6s steps(80, end) infinite, fade-in 1s ease-in, shine 3s linear infinite;
-
-  @keyframes typing {
-    0% {
-      width: 0;
-    }
-    20%,
-    80% {
-      width: 100%;
-    }
-    100% {
-      width: 0;
-    }
-  }
-
-  --animate-preload: preload 1.4s ease-in-out infinite;
-
-  @keyframes preload {
-    0% {
-      transform: scaleX(0);
-      transform-origin: left;
-    }
-    50% {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-    51% {
-      transform-origin: right;
-    }
-    100% {
-      transform: scaleX(0);
-      transform-origin: right;
-    }
-  }
-
-  @keyframes shine {
-    to {
-      background-position: 200% center;
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
-
-/* Preloader */
-.preloader-logo {
-  animation: preloader-float 2s ease-in-out infinite;
-}
-@keyframes preloader-float {
-  50% {
-    transform: scale(1.03);
-    opacity: 0.85;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .preloader-logo {
-    animation: none;
-  }
-}
-
-/* Hero */
-.hero-dots {
-  background-image: radial-gradient(rgb(255 255 255 / 0.55) 1.5px, transparent 1.6px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, #000 20%, transparent 75%);
-}
-.hero-orb {
-  background: radial-gradient(circle, rgb(255 255 255 / 0.55), transparent 65%);
-  animation: hero-drift 14s ease-in-out infinite alternate;
-}
-@keyframes hero-drift {
-  to {
-    transform: translate3d(7vw, -5vh, 0) scale(1.15);
-  }
-}
-/* Entrance: waits for the preloader (html[data-ready]) so it plays as the preloader fades. */
-.hero-rise {
-  opacity: 0;
-  transform: translateY(24px);
-}
-html[data-ready] .hero-rise {
-  animation: hero-rise 0.9s var(--ease-out-quart) both;
-  animation-delay: calc(var(--i, 0) * 120ms + 250ms);
-}
-@keyframes hero-rise {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.scroll-cue::after {
-  content: "";
-  width: 4px;
-  height: 8px;
-  border-radius: 9999px;
-  background: currentColor;
-  animation: scroll-cue 1.6s ease-in-out infinite;
-}
-@keyframes scroll-cue {
-  0% {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  40% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-orb,
-  .scroll-cue::after {
-    animation: none;
-  }
-    .hero-rise {
-    opacity: 1;
-    transform: none;
-    animation: none !important;
-  }
 }
 
 @layer base {
@@ -156,20 +26,26 @@ html[data-ready] .hero-rise {
     overflow-x: clip;
   }
 
+  /* Reserve the scrollbar's space so the page doesn't shift when the intro unlocks scrolling. */
   html {
-    scroll-behavior: smooth;
     scrollbar-gutter: stable;
   }
 
-  /* Lock scroll while the preloader is up; releases as soon as it starts leaving. */
-  body:has(#preloader:not([data-leaving])) {
-    overflow: hidden;
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
+  ::selection {
+    background: var(--color-brand);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   body {
@@ -242,5 +118,113 @@ html[data-ready] .hero-rise {
 
   .rich-text hr {
     @apply my-[26px] border-line;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------ */
+/* Brand mark + motion                                                                         */
+/* ------------------------------------------------------------------------------------------ */
+
+@layer components {
+  /* The IEEE CS disc, drawn as a mask so it can take any colour. The Φ is transparent in the
+     source image, so whatever sits behind the disc shows through the letterform. */
+  .logo-mark {
+    display: block;
+    aspect-ratio: 1;
+    -webkit-mask: url("/images/ieee-cs-mark.webp") center / contain no-repeat;
+    mask: url("/images/ieee-cs-mark.webp") center / contain no-repeat;
+  }
+
+  /* Scroll reveals. Elements start hidden in the server HTML and <Reveal> animates them in. */
+  [data-reveal="pending"] {
+    opacity: 0;
+  }
+
+  .hero-glow {
+    background:
+      radial-gradient(48% 62% at 76% 50%, rgb(255 163 0 / 0.3), rgb(255 163 0 / 0) 70%),
+      radial-gradient(40% 50% at 12% 100%, rgb(255 230 189 / 0.7), rgb(255 230 189 / 0) 70%);
+  }
+
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.7) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer 2.8s var(--ease-out-quart) infinite;
+  }
+
+  @keyframes shimmer {
+    to {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/* Intro overlay. <html> gets .intro-active from a tiny inline script in <head> before first paint,
+   so there is never a flash of the page underneath. */
+#intro {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  place-items: center;
+  background: rgb(255 163 0);
+  cursor: pointer;
+}
+
+#intro-disc {
+  width: clamp(120px, 16vw, 180px);
+  background: #fff;
+  opacity: 0;
+  will-change: transform;
+}
+
+html.intro-active {
+  overflow: hidden;
+}
+
+html.intro-active #intro {
+  display: grid;
+}
+
+/* The hero's disc stays hidden until the intro disc has flown onto it. */
+html.intro-active #hero-disc {
+  opacity: 0;
+}
+
+.site-nav {
+  transition:
+    opacity 0.9s var(--ease-out-quart),
+    transform 0.9s var(--ease-out-quart);
+}
+
+html.intro-active:not(.intro-fly) .site-nav {
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
+/* Hero entrance starting states. <Hero> animates them; without JS (or with reduced motion) they
+   are simply shown. */
+.hero-line {
+  transform: translateY(105%);
+}
+
+[data-hero-fade] {
+  opacity: 0;
+}
+
+[data-static] .hero-line {
+  transform: none;
+}
+
+[data-static] [data-hero-fade] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer::after {
+    animation: none;
   }
 }

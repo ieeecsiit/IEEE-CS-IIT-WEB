@@ -33,7 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       images: [...executiveCommittee, ...standingCommittee].map((member) => absoluteUrl(member.image)),
     },
+    { url: absoluteUrl("/volunteer"), changeFrequency: "monthly", priority: 0.6 },
     { url: absoluteUrl("/contact"), changeFrequency: "yearly", priority: 0.5 },
+    { url: absoluteUrl("/merch"), changeFrequency: "monthly", priority: 0.3 },
     ...events.map((event) => ({
       url: absoluteUrl(`/events/${event.slug}`),
       lastModified: new Date(event.updatedAt),

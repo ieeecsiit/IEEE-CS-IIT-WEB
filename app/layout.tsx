@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import { Footer } from "./_components/footer";
+import { Intro } from "./_components/intro";
 import { JsonLd } from "./_components/json-ld";
 import { Navbar } from "./_components/navbar";
-import { Preloader } from "./_components/preloader";
+import { SiteChrome } from "./_components/site-chrome";
 import { graph, organisationSchema, websiteSchema } from "./_lib/jsonld";
+import { introGateScript } from "./_lib/motion";
 import { ORGANISATION, SITE_DESCRIPTION, SITE_NAME, SITE_SHORT_NAME, SITE_URL, pageMetadata } from "./_lib/seo";
 import "./globals.css";
 
@@ -53,16 +55,29 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={clashDisplay.variable}>
-      <body>
+    // suppressHydrationWarning: the intro gate script below adds a class to <html> before React loads.
+    <html lang="en" className={clashDisplay.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: introGateScript }} />
+        {/* Without JavaScript nothing animates in, so show everything. */}
         <noscript>
-          <style>{`#preloader{display:none}body{overflow:visible!important}.hero-rise{opacity:1!important;transform:none!important}`}</style>
+          <style>{`[data-reveal],[data-hero-fade]{opacity:1!important}.hero-line{transform:none!important}`}</style>
         </noscript>
-        <Preloader />
+      </head>
+      <body>
+        {/* Intro: the CS disc zooms in and out, then flies onto the hero. Hidden unless <html> has .intro-active. */}
+        <div id="intro" aria-hidden="true">
+          <div id="intro-disc" className="logo-mark" />
+        </div>
+        <Intro />
         <JsonLd data={graph(organisationSchema(), websiteSchema())} />
-        <Navbar />
+        <SiteChrome>
+          <Navbar />
+        </SiteChrome>
         <main>{children}</main>
-        <Footer />
+        <SiteChrome>
+          <Footer />
+        </SiteChrome>
         {ANALYTICS_ENABLED && (
           <>
             {/* Google Analytics 4. Its enhanced measurement records client-side route changes as page views. */}

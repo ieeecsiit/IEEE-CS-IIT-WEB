@@ -1,165 +1,231 @@
 "use client";
 
+import { animate, stagger, utils, type JSAnimation } from "animejs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { Container } from "./container";
-import { SiteImage } from "./site-image";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { prefersReducedMotion } from "../_lib/motion";
 
 const links = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About Us" },
-  { href: "/events", label: "Our Events" },
+  { href: "/about", label: "About" },
+  { href: "/events", label: "Events" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
+  { href: "/merch", label: "Merch", soon: true },
 ];
+
+const isActive = (href: string, pathname: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
 export function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const menuOpenRef = useRef(false);
+
+  const highlight = useRef<HTMLSpanElement>(null);
+  const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const highlightReady = useRef(false);
+  const panel = useRef<HTMLDivElement>(null);
+  const panelAnimations = useRef<JSAnimation[]>([]);
 
   useEffect(() => {
-    menuOpenRef.current = menuOpen;
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  /** Slides the highlight under `href`, or hides it when there is no such link. */
+  const moveHighlight = useCallback((href: string | undefined, instant = false) => {
+    const mark = highlight.current;
+    const target = href ? linkRefs.current[href] : null;
+    if (!mark) return;
+    if (!target) {
+      animate(mark, { opacity: 0, duration: 250, ease: "outQuad" });
+      return;
+    }
+    const params = { translateX: target.offsetLeft, width: target.offsetWidth, opacity: 1 };
+    if (instant || prefersReducedMotion()) utils.set(mark, params);
+    else animate(mark, { ...params, duration: 650, ease: "outExpo" });
+  }, []);
+
+  const activeHref = links.find(({ href }) => isActive(href, pathname))?.href;
+
+  // Rest the highlight under the current page (no animation on first paint, a glide afterwards).
+  useLayoutEffect(() => {
+    moveHighlight(activeHref, !highlightReady.current);
+    highlightReady.current = true;
+    const onResize = () => moveHighlight(activeHref, true);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [activeHref, moveHighlight]);
+
+  // Mobile menu: a clip-path wipe, then the links rise in one by one.
+  useEffect(() => {
+    const element = panel.current;
+    if (!element) return;
+    panelAnimations.current.forEach((animation) => animation.revert());
+    panelAnimations.current = [];
+
+    if (menuOpen) {
+      document.documentElement.style.overflow = "hidden";
+      element.style.visibility = "visible";
+      panelAnimations.current.push(
+        animate(element, { clipPath: ["inset(0 0 100% 0)", "inset(0 0 0% 0)"], duration: 800, ease: "outExpo" }),
+        animate(element.querySelectorAll("[data-menu-item]"), {
+          opacity: [0, 1],
+          translateY: [36, 0],
+          duration: 900,
+          ease: "outExpo",
+          delay: stagger(70, { start: 250 }),
+        }),
+      );
+    } else if (element.style.visibility === "visible") {
+      document.documentElement.style.overflow = "";
+      panelAnimations.current.push(
+        animate(element, {
+          clipPath: ["inset(0 0 0% 0)", "inset(0 0 100% 0)"],
+          duration: 550,
+          ease: "inOutQuart",
+          onComplete: () => {
+            element.style.visibility = "hidden";
+          },
+        }),
+      );
+    }
   }, [menuOpen]);
 
-  // Hide while scrolling down, reveal while scrolling up; drive the reading-progress bar without re-rendering.
+  // Never leave the page scroll-locked, and let Escape close the menu.
   useEffect(() => {
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progressRef.current?.style.setProperty("transform", `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`);
-      setScrolled(y > 30);
-      setHidden(y > lastScrollY && y > 150 && !menuOpenRef.current);
-      lastScrollY = y;
-    };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("keydown", onKey);
+      document.documentElement.style.overflow = "";
     };
   }, []);
 
-  // Close the mobile menu on Escape.
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [menuOpen]);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
-      <header
-        className={`fixed top-0 z-[9999] w-full transition-transform duration-500 ease-out-quart ${
-          hidden ? "-translate-y-full" : ""
-        }`}
-      >
-        <div className={`transition-[padding] duration-500 ease-out-quart ${scrolled ? "pt-2" : "pt-4"}`}>
-          <Container>
-            <div
-              className={`relative flex items-center justify-between rounded-2xl border border-white/10 transition-[padding,background-color,box-shadow] duration-500 ease-out-quart ${
-                scrolled
-                  ? "bg-ink/85 px-5 py-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)] backdrop-blur-xl"
-                  : "bg-ink px-6 py-4 shadow-[0_6px_20px_rgba(0,0,0,0.12)]"
+      <header className="site-nav pointer-events-none fixed inset-x-0 top-4 z-[9999] flex justify-center px-3">
+        <div
+          className={`pointer-events-auto flex items-center gap-1 rounded-full bg-ink/90 p-1.5 pl-2 text-white ring-1 ring-white/10 backdrop-blur-md transition-shadow duration-500 max-md:w-full max-md:max-w-[460px] max-md:justify-between ${
+            scrolled ? "shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)]" : "shadow-[0_8px_30px_-12px_rgba(0,0,0,0.35)]"
+          }`}
+        >
+          <Link href="/" onClick={closeMenu} aria-label="IEEE CS IIT, home" className="flex items-center gap-2.5 rounded-full pr-3">
+            <span className="logo-mark size-9 bg-brand" />
+            <span className="text-[17px] leading-none font-semibold tracking-tight">IEEE CS</span>
+          </Link>
+
+          <nav
+            aria-label="Main"
+            onPointerLeave={() => moveHighlight(activeHref)}
+            className="relative ml-1 hidden items-center md:flex"
+          >
+            <span
+              ref={highlight}
+              aria-hidden
+              className="absolute top-0 left-0 h-full rounded-full bg-white/12 opacity-0"
+            />
+            {links.map(({ href, label, soon }) => {
+              const active = isActive(href, pathname);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  ref={(element) => {
+                    linkRefs.current[href] = element;
+                  }}
+                  onPointerEnter={() => moveHighlight(href)}
+                  onFocus={() => moveHighlight(href)}
+                  onBlur={() => moveHighlight(activeHref)}
+                  aria-current={active ? "page" : undefined}
+                  className={`relative flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[16px] leading-none font-normal transition-colors duration-300 ${
+                    active ? "text-white" : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  {label}
+                  {soon && <span className="size-1.5 rounded-full bg-brand" title="Coming soon" />}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <Link
+            href="/#join"
+            className="ml-2 hidden rounded-full bg-brand px-5 py-2.5 text-[16px] leading-none font-medium text-ink transition-colors duration-300 hover:bg-white md:block"
+          >
+            Join us
+          </Link>
+
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="relative size-9 cursor-pointer rounded-full bg-white/10 transition-colors duration-300 hover:bg-white/20 md:hidden"
+          >
+            <span
+              className={`absolute top-1/2 left-1/2 h-[1.5px] w-4 -translate-x-1/2 bg-white transition-transform duration-500 ease-out-quart ${
+                menuOpen ? "rotate-45" : "-translate-y-[3.5px]"
               }`}
-            >
-              <Link href="/" aria-label="Home" className="flex-none">
-                <SiteImage
-                  src="/images/ieee-cs-sbc-of-iit-yellow-white.webp"
-                  alt="IEEECS"
-                  priority
-                  sizes="170px"
-                  className="w-[170px] max-sm:w-[140px] max-xs:w-[120px]"
-                />
-              </Link>
-
-              <nav
-                aria-label="Main"
-                className={`ml-auto flex items-center gap-1 self-center max-md:absolute max-md:top-[calc(100%+8px)] max-md:right-0 max-md:left-0 max-md:origin-top max-md:flex-col max-md:items-stretch max-md:gap-0 max-md:overflow-hidden max-md:rounded-2xl max-md:border max-md:border-white/10 max-md:bg-ink/95 max-md:p-3 max-md:shadow-[0_20px_40px_rgba(0,0,0,0.3)] max-md:backdrop-blur-xl max-md:transition-[opacity,transform,visibility] max-md:duration-300 max-md:ease-out-quart ${
-                  menuOpen
-                    ? "max-md:visible max-md:scale-100 max-md:opacity-100"
-                    : "max-md:invisible max-md:scale-95 max-md:opacity-0"
-                }`}
-              >
-                {links.map(({ href, label }, i) => {
-                  const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={() => setMenuOpen(false)}
-                      aria-current={active ? "page" : undefined}
-                      style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
-                      className={`group relative rounded-lg px-4 py-2 text-[16px] font-normal tracking-wide uppercase transition-[color,background-color,opacity,transform] duration-300 hover:text-brand xl:text-[17px] max-md:py-3.5 max-md:text-center max-md:hover:bg-white/5 ${
-                        menuOpen ? "max-md:translate-y-0 max-md:opacity-100" : "max-md:translate-y-2 max-md:opacity-0"
-                      } ${active ? "text-brand" : "text-white"}`}
-                    >
-                      {label}
-                      <span
-                        aria-hidden
-                        className={`absolute right-4 bottom-1 left-4 h-0.5 origin-left rounded-full bg-brand transition-transform duration-300 ease-out-quart max-md:hidden ${
-                          active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                        }`}
-                      />
-                    </Link>
-                  );
-                })}
-              </nav>
-
-              <button
-                type="button"
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={menuOpen}
-                onClick={() => setMenuOpen((open) => !open)}
-                className="order-1 ml-5 hidden size-11 cursor-pointer items-center justify-center rounded-xl border border-white/20 bg-white/5 text-white transition-colors hover:border-brand hover:text-brand max-md:flex max-sm:ml-2.5"
-              >
-                <span className="relative block h-4 w-5">
-                  <span
-                    className={`absolute left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
-                      menuOpen ? "top-[7px] rotate-45" : "top-0"
-                    }`}
-                  />
-                  <span
-                    className={`absolute top-[7px] left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
-                      menuOpen ? "opacity-0" : "opacity-100"
-                    }`}
-                  />
-                  <span
-                    className={`absolute left-0 block h-0.5 w-5 rounded bg-current transition-all duration-300 ${
-                      menuOpen ? "top-[7px] -rotate-45" : "top-[14px]"
-                    }`}
-                  />
-                </span>
-              </button>
-
-              {/* Reading progress, clipped to the bar's rounded corners. */}
-              <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px] overflow-hidden rounded-b-2xl">
-                <div ref={progressRef} className="h-full origin-left scale-x-0 bg-brand" />
-              </div>
-            </div>
-          </Container>
+            />
+            <span
+              className={`absolute top-1/2 left-1/2 h-[1.5px] w-4 -translate-x-1/2 bg-white transition-transform duration-500 ease-out-quart ${
+                menuOpen ? "-rotate-45" : "translate-y-[2px]"
+              }`}
+            />
+          </button>
         </div>
       </header>
-      {/* Spacer matching the unscrolled header: 16px top + 2px border + 32px padding + logo height (1566x702). */}
+
+      {/* Full-screen menu for small screens. */}
       <div
-        aria-hidden
-        className="h-[calc(50px+170px*702/1566)] max-sm:h-[calc(50px+140px*702/1566)] max-xs:h-[calc(50px+120px*702/1566)]"
-      />
+        ref={panel}
+        id="mobile-menu"
+        aria-hidden={!menuOpen}
+        inert={!menuOpen}
+        style={{ visibility: "hidden" }}
+        className="fixed inset-0 z-[9998] flex flex-col justify-center overflow-hidden bg-ink px-8 pt-24 pb-10 text-white md:hidden"
+      >
+        <div aria-hidden className="logo-mark pointer-events-none absolute -right-[30%] -bottom-[8%] w-[90%] bg-white/[0.04]" />
+        <nav aria-label="Mobile" className="relative flex flex-col gap-1">
+          {links.map(({ href, label, soon }) => (
+            <Link
+              key={href}
+              href={href}
+              data-menu-item
+              onClick={closeMenu}
+              aria-current={isActive(href, pathname) ? "page" : undefined}
+              className={`flex items-center gap-3 py-2 text-[clamp(2.6rem,12vw,4rem)] leading-[1.05] font-extralight tracking-[-0.03em] ${
+                isActive(href, pathname) ? "text-brand" : "text-white"
+              }`}
+            >
+              {label}
+              {soon && (
+                <span className="rounded-full bg-brand px-3 py-1.5 text-sm leading-none font-medium tracking-normal text-ink">
+                  Soon
+                </span>
+              )}
+            </Link>
+          ))}
+        </nav>
+        <Link
+          href="/#join"
+          data-menu-item
+          onClick={closeMenu}
+          className="relative mt-10 self-start rounded-full bg-brand px-8 py-4 text-lg leading-none font-medium text-ink"
+        >
+          Join us
+        </Link>
+      </div>
+
+      {/* Inner pages start below the floating nav; the home hero runs underneath it. */}
+      {pathname !== "/" && <div aria-hidden className="h-[84px]" />}
     </>
   );
 }

@@ -29,7 +29,7 @@ export default async function EventsPage() {
           eventListSchema(events),
         )}
       />
-      <PageHeader title="Our Events" />
+      <PageHeader title="Our events" tagline="Hackathons, contests and workshops" />
       <section className="py-[50px]">
         <Container>
           <EventGrid events={events} />

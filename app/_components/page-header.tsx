@@ -8,19 +8,20 @@ type PageHeaderProps = {
   titleAs?: "h1" | "p";
 };
 
-export function PageHeader({ title, tagline = "Who We are and what we do", titleAs = "h1" }: PageHeaderProps) {
+export function PageHeader({ title, tagline = "Who we are and what we do", titleAs = "h1" }: PageHeaderProps) {
   return (
-    <div className="mt-5">
+    <div className="pt-6 pb-2">
       <Container>
-        <div className="flex items-center rounded-[5px] border border-line p-[50px] max-sm:block max-xs:p-5">
+        <div className="flex items-end justify-between gap-x-10 gap-y-5 border-b border-line pb-8 max-sm:flex-col max-sm:items-start">
           <Reveal
             as={titleAs}
             from="left"
-            className="m-0 text-[80px] leading-[60px] font-extralight text-black uppercase max-sm:mb-5 max-sm:text-[60px] max-sm:leading-[50px] max-xs:text-[40px] max-xs:leading-10"
+            className="m-0 text-[clamp(3rem,9vw,7.5rem)] leading-[0.95] font-extralight tracking-[-0.04em] text-ink"
           >
             {title}
+            <span className="font-semibold text-brand">.</span>
           </Reveal>
-          <Reveal from="right" className="ml-5 rounded-[5px] bg-brand p-2.5 font-medium text-white max-sm:ml-0">
+          <Reveal from="right" delay={150} className="max-w-[26ch] pb-1 text-xl leading-snug font-light text-ink/60 sm:text-right">
             {tagline}
           </Reveal>
         </div>

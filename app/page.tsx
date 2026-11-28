@@ -1,35 +1,28 @@
 import Link from "next/link";
 import { BlogList } from "./_components/blog-list";
-import { CountUp } from "./_components/count-up";
-import { CursorGlow } from "./_components/cursor-glow";
 import { Container, SectionTitle } from "./_components/container";
+import { Counter } from "./_components/counter";
 import { EventGrid } from "./_components/event-grid";
+import { Hero } from "./_components/hero";
 import { Reveal } from "./_components/reveal";
-import { SiteImage } from "./_components/site-image";
 import { JsonLd } from "./_components/json-ld";
-import { Typewriter } from "./_components/typewriter";
 import { WhoWeAre } from "./_components/who-we-are";
 import { getBlogPosts } from "./_data/blogs";
 import { getEvents } from "./_data/events";
 import { breadcrumbSchema, eventListSchema, graph, webPageSchema } from "./_lib/jsonld";
+import { MEMBER_FORM_URL, VOLUNTEER_PATH } from "./_lib/links";
 import { SITE_DESCRIPTION, SITE_NAME } from "./_lib/seo";
 
 const stats = [
-  { value: "2017", label: "Onwards", card: "bg-brand", dot: "bg-[#0f0f0f]", count: false },
-  { value: "500+", count: true, label: "Memberships", card: "bg-[#4a4a4a]", dot: "bg-[#242424]" },
-  { value: "20+", count: true, label: "Completed Projects", card: "bg-[#191919]", dot: "bg-brand" },
-  { value: "5000+", count: true, label: "Delegates", card: "bg-[#939393]", dot: "bg-[#b7b7b7]" },
+  { to: 2017, label: "Founded", plain: true },
+  { to: 500, suffix: "+", label: "Members" },
+  { to: 20, suffix: "+", label: "Projects completed" },
+  { to: 5000, suffix: "+", label: "Delegates" },
 ];
 
 const joinLinks = [
-  {
-    label: "Join as Member",
-    href: "https://docs.google.com/forms/d/1axf5zLUlSE3bkauzC3GV4UbEgj6hNz09nER-UZPNXbs/viewform",
-  },
-  {
-    label: "Join as Volunteer",
-    href: "https://docs.google.com/forms/d/1XCQPdXQPVMu3WJTOL5Jl2ly0IuPsaDI_vUR795To2PI/viewform",
-  },
+  { label: "Join as Member", href: MEMBER_FORM_URL, external: true },
+  { label: "Join as Volunteer", href: VOLUNTEER_PATH, external: false },
 ];
 
 export default async function HomePage() {
@@ -44,109 +37,78 @@ export default async function HomePage() {
           eventListSchema(events.slice(0, 3)),
         )}
       />
-      <section className="relative flex h-screen items-center justify-center overflow-hidden bg-radial from-brand to-white [--logo:400px] max-md:[--logo:250px] max-sm:[--logo:200px] max-xs:[--logo:150px]">
-        {/* Depth: dot texture and slow drifting light, all white so the hero colours are unchanged */}
-        <div aria-hidden className="hero-dots pointer-events-none absolute inset-0" />
-        <div aria-hidden className="hero-orb pointer-events-none absolute top-[8%] left-[6%] size-[38vmax] rounded-full opacity-50" />
-        <div
-          aria-hidden
-          className="hero-orb pointer-events-none absolute right-[4%] bottom-[6%] size-[30vmax] rounded-full opacity-40 [animation-delay:-7s] [animation-direction:alternate-reverse]"
-        />
-        <CursorGlow />
-        <h1 className="sr-only">IEEE Computer Society Student Branch Chapter of IIT</h1>
+      <Hero />
 
-        {/* Logo stays dead centre (matches the preloader); everything else is positioned around it */}
-        <div data-hero-logo className="relative z-10 w-full max-w-[400px] max-md:max-w-[250px] max-sm:max-w-[200px] max-xs:max-w-[150px]">
-          <SiteImage
-            src="/images/ieee-cs-sbc-of-iit-white.webp"
-            alt="IEEE Computer Society SBC of IIT"
-            priority
-            sizes="400px"
-            className="h-auto w-full object-contain"
-          />
-        </div>
-
-        <a
-          href="#stats"
-          aria-label="Scroll to content"
-          style={{ "--i": 0 } as React.CSSProperties }
-          className="hero-rise absolute inset-x-0 bottom-6 mx-auto flex w-fit flex-col items-center gap-2 text-ink [@media(max-height:560px)]:hidden"
-        >
-          <span className="text-xs font-medium tracking-[0.3em] uppercase">Scroll</span>
-          <span className="scroll-cue flex h-10 w-6 items-start justify-center rounded-full border-2 border-ink/60 pt-2" />
-        </a>
-      </section>
-
-      <Typewriter text="INNOVATE • AUTOMATE • DOMINATE •" />
-
-      <div id="stats" className="scroll-mt-4">
+      <section className="border-y border-line">
         <Container>
-          <div className="grid grid-cols-4 gap-5 text-white max-md:grid-cols-2 max-sm:gap-3">
-            {stats.map(({ value, label, card, dot, count }) => (
-              <Reveal key={label} from="flip" className="flex">
-                <div
-                  className={`flex min-h-80 w-full flex-col max-sm:min-h-64 rounded-[5px] p-5 shadow-none transition-[translate,box-shadow] duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_18px_40px_-12px_rgb(0_0_0/0.45)] ${card}`}
-                >
-                  <div className={`size-5 rounded-full ${dot}`} />
-                  <div className="mt-auto">
-                    <div className="mb-[15px] text-[70px] leading-[50px] font-medium max-sm:text-[44px] max-sm:leading-[44px]">
-                      {count ? <CountUp value={value} /> : value}
-                    </div>
-                    <div className="capitalize">{label}</div>
-                  </div>
-                </div>
+          <dl className="m-0 grid grid-cols-4 max-md:grid-cols-2">
+            {stats.map(({ to, suffix, label, plain }, index) => (
+              <Reveal
+                key={label}
+                from="bottom"
+                delay={index * 110}
+                className="border-l border-line px-[clamp(1rem,2.5vw,2.5rem)] py-[clamp(2rem,4vw,3.5rem)] flex flex-col-reverse first:border-l-0 first:pl-0 max-md:odd:border-l-0 max-md:odd:pl-0 max-md:nth-[n+3]:border-t"
+              >
+                <dt className="text-lg leading-none font-light text-ink/60">{label}</dt>
+                <dd className="m-0 mb-3 text-[clamp(2.8rem,6vw,5.5rem)] leading-none font-medium tracking-[-0.04em] text-ink">
+                  {plain ? to : <Counter to={to} />}
+                  {suffix && <span className="text-brand">{suffix}</span>}
+                </dd>
               </Reveal>
             ))}
-          </div>
+          </dl>
         </Container>
-      </div>
+      </section>
 
       <WhoWeAre />
 
-      <section className="pt-[150px] max-sm:pt-24">
+      <section className="pt-[clamp(5rem,10vw,9rem)]">
         <Container>
           <div className="relative">
-            <SectionTitle>Our Events</SectionTitle>
+            <SectionTitle>Our events</SectionTitle>
             <Link
               href="/events"
-              className="absolute top-2.5 right-0 text-lg text-black uppercase max-xs:top-0"
+              className="absolute top-3 right-0 text-lg leading-none text-ink underline decoration-brand decoration-2 underline-offset-8 transition-colors duration-300 hover:text-ember max-sm:hidden"
             >
-              All Projects
+              All events
             </Link>
           </div>
           <EventGrid events={events.slice(0, 3)} />
         </Container>
       </section>
 
-      <section className="pt-[150px] max-sm:pt-24">
+      <section className="pt-[clamp(5rem,10vw,9rem)]">
         <Container>
-          <SectionTitle>Our Blogs</SectionTitle>
+          <SectionTitle>Our blogs</SectionTitle>
           <BlogList posts={blogPosts.slice(0, 3)} />
         </Container>
       </section>
 
-      <section className="bg-white px-5 py-[50px] text-left max-sm:py-10">
+      <section id="join" className="scroll-mt-24 pt-[clamp(5rem,10vw,9rem)]">
         <Container>
-          <h2 className="relative z-[1] mt-5 mb-[30px] border-b border-brand text-[5rem] leading-[0.6] font-semibold text-black uppercase max-sm:text-center max-sm:text-[2.5rem]">
-            Join Us
-          </h2>
-          <p className="mb-10 text-[2.5rem] leading-normal text-black max-sm:text-center max-sm:text-[1.5rem] max-sm:leading-snug">
-            Become a part of our community and contribute to the world of technology. Whether you want to be a member or
-            volunteer, we welcome you!
-          </p>
-          <div className="flex justify-center gap-[30px] max-sm:flex-col max-sm:gap-5 max-sm:text-center">
-            {joinLinks.map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block rounded-[5px] bg-brand px-[30px] py-5 text-2xl font-medium text-white transition-colors duration-300 hover:bg-ink"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
+          <Reveal from="bottom" className="relative overflow-hidden rounded-[28px] bg-brand px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(3rem,7vw,6rem)]">
+            <div aria-hidden className="logo-mark pointer-events-none absolute -right-[10%] -bottom-[45%] w-[48%] bg-white/25" />
+            <h2 className="relative m-0 max-w-[14ch] text-[clamp(2.6rem,7vw,6rem)] leading-[0.98] font-semibold tracking-[-0.035em] text-ink">
+              Build with us.
+            </h2>
+            <p className="relative mt-6 mb-10 max-w-[38ch] text-[clamp(1.2rem,2vw,1.6rem)] leading-snug font-normal text-ink/80">
+              Join as a member to take part in our events, or volunteer to help run them.
+            </p>
+            <div className="relative flex flex-wrap gap-4">
+              {joinLinks.map(({ label, href, external }, index) => (
+                <a
+                  key={label}
+                  href={href}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className={`rounded-full px-8 py-5 text-xl leading-none font-medium transition-colors duration-300 ${
+                    index === 0 ? "bg-ink text-white hover:bg-white hover:text-ink" : "bg-white/0 text-ink ring-2 ring-ink hover:bg-ink hover:text-white"
+                  }`}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+          </Reveal>
         </Container>
       </section>
     </>

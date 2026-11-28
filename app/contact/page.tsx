@@ -27,7 +27,7 @@ export default function ContactPage() {
           breadcrumbSchema("/contact", [{ name: "Contact", path: "/contact" }]),
         )}
       />
-      <PageHeader title="contact" />
+      <PageHeader title="Contact" tagline="We would love to hear from you" />
       <section className="pt-[100px] pb-[50px]">
         <Container>
           <div className="grid grid-cols-2 gap-5 text-black xl:gap-[70px] max-sm:mt-[60px] max-sm:grid-cols-1 max-sm:gap-[50px]">

@@ -62,7 +62,7 @@ export default async function EventPage({ params }: Props) {
           eventSchema(event),
         )}
       />
-      <PageHeader title="Our Events" titleAs="p" />
+      <PageHeader title="Our events" titleAs="p" tagline="Hackathons, contests and workshops" />
       <section className="py-[50px]">
         <Container>
           <div className="grid grid-cols-2 gap-5 max-sm:grid-cols-1 max-sm:gap-[50px]">
